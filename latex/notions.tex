@@ -1,0 +1,85 @@
+\theoremstyle{concept}
+\newtheorem{concept}{Concept}[section]
+
+
+
+
+\section{Concepts and notions}
+
+\subsection*{Fundamentals}
+\paragraph{} Here I non-rigourously describe the main notions that are used during the algorithm discussions.
+\begin{concept}
+  A quantum cirquit is composed of a (multiple) qubit(s) input and a measurable output of the same size.
+  If multiple qubits are involved, the inputs are mathematically defined: 
+  \begin{gather}
+    \text{input of n qubits }\ket{\psi_i} = \bigotimes_{i=1}^{n}\ket{\psi_i}
+  \end{gather}
+\end{concept}
+
+\begin{concept}
+  A quantum circuit is composed of different and various gates, that can be applied on multiple qubits. Every gate is an operator.
+  If a gate $\widehat{O}$ is applied only on state $\ket{\psi_i}$, the operator on the whole system is given by 
+  \begin{gather}
+    \widehat{O}_{\text{on state i}} = \mathbbm{1}_{(1)}\otimes \mathbbm{1}_{(2)}\otimess \cdots \otimes \mathbbm{1}_{(i-1)}\otimes 
+    \widehat{O}\otimes \mathbbm{1}_{(i+1)} \cdots \otimes \mathbbm{1}_{(n)}
+  \end{gather}
+\end{concept}
+%\begin{concept}[Quantum function evaluation]
+%Consider some kind of quantum cirquit and a function. I define the \textsl{(basic)} quantum function evaluation by the circuit given below:
+%\end{concept}
+%
+%
+%\begin{figure}[ht!]
+%  \Qcircuit @C=1em @R=1em{
+%    \lstick{\ket{0}} & \qw & \multigate{1}{U} & \qw \\
+%    \lstick{\ket{0}} & \qw & \ghost{U} & \qw \\
+%    \lstick{\ket{0}} & \qw & \ghost{U} & \qw \\
+%  }
+%  \label{fig:function_evaluation}
+%\caption{Quantum function evaluation.}
+%\end{figure}
+%
+%What the binary algorithm does is to \textsl{evaluate the function of the target cubit}.
+
+\subsection*{Main Circuits}
+Let's discuss main representation of the circuits.
+
+\begin{table}[ht!]
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Operator & \makecell{Bra-Ket \\ representation} & Matrix & \makecell{Other math \\ properties} & Qiskit \\
+    \hline 
+    \hline
+    \makecell{Identity op. \\ $I=\text{Id}=\mathbbm{1}$}  & \makecell{Closure relation: \\ $\forall \{a_i\}\in V$ \\ $\mathbbm{1}=\sum_i \ket{v_i}\bra{v_i}$ } & $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$ & $\forall \ket{\psi} \in V , \mathbbm{1}\ket{\psi}=\ket{\psi}$ &  \\
+    \hline
+    \makecell{Hadamard op. \\ $H=\mathcal{H}$ } & \makecell{In the $Z/X$ basis \\ $\mathcal{H}=\ket{+}\bra{0} + \ket{-}\bra{1}$} &
+    $\frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$ & \makecell{Change of basis from \\ $Z$ to $X$ basis.} & \\
+    \hline 
+    \makecell{Z-gate \\ $\sigma_z = Z$} & $\sigma_z \equiv \ket{0}\bra{1} - \ket{1}\bra{1}$ & $ \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} $ &
+    \makecell{Eigen-op. of the \\ $\ket{+1;\hat{S}_z}=\ket{0}$ state} & \\
+    \hline
+    \makecell{X-gate \\ $\sigma_x = X$} & \makecell{$\sigma_x \equiv \ket{0}\bra{1}+\ket{1}\bra{0}$ \\ $\sigma_x \equiv \ket{+}\bra{+} - \ket{-}\bra{-}$ } & $\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$ & 
+    \makecell{Eigen-op. of the \\ $\ket{+}\equiv \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$} & \\
+\hline
+    \makecell{phase gate\\ $P(\phi)$} & $P(\phi)\equiv \ket{0}\bra{0} + e^{i\phi}\ket{1}\ket{1}$ & $\begin{bmatrix} 1&0\\0&e^{i\phi} \end{bmatrix}$ & & \\
+    \hline
+    \makecell{Controlled-NOT \\
+      \Qcircuit @C=1em @R=0.5em{
+    \qw & \ctrlo{1}&\qw\\
+    \qw & \targ & \qw
+    }
+  }& \makecell{
+  $\text{CNOT}=\\=\ket{0}\bra{0}\otimes \mathbbm{1}+\ket{1}\bra{1}\otimes X$\\
+  \ket{x_{c}}\ket{x_{t}}\xrightarrow{CNOT} \ket{x_{c}}\ket{x_{c}\oplus x_{t}}
+  } & 
+  $\begin{bmatrix}
+    1&0&0&0\\
+    0&1&0&0\\
+    0&0&0&1\\
+    0&0&1&0
+  \end{bmatrix}$ &
+  \makecell{Acting on a 4x1 vec.\\spanned by \\$\{\ket{00},\ket{01},\ket{10},\ket{11}\} } 
+  & \\
+  \hline
+  \end{tabular}    
+\end{table}

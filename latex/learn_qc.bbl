@@ -1,0 +1,326 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{noauthor_bernsteinvazirani_2022}{inreference}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{abstract}{%
+    The Bernstein–Vazirani algorithm, which solves the Bernstein–Vazirani
+  problem, is a quantum algorithm invented by Ethan Bernstein and Umesh
+  Vazirani in 1992. It is a restricted version of the Deutsch–Jozsa algorithm
+  where instead of distinguishing between two different classes of functions,
+  it tries to learn a string encoded in a function. The Bernstein–Vazirani
+  algorithm was designed to prove an oracle separation between complexity
+  classes {BQP} and {BPP}.%
+    }
+    \field{booktitle}{Wikipedia}
+    \field{note}{Page Version {ID}: 1121289156}
+    \field{title}{Bernstein–Vazirani algorithm}
+    \verb{url}
+    \verb https://en.wikipedia.org/w/index.php?title=Bernstein%E2%80%93Vazirani
+    \verb _algorithm&oldid=1121289156
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/VPQ8C5RI/Bernstein–Vazirani_algor
+    \verb ithm.html:text/html
+    \endverb
+    \field{day}{11}
+    \field{month}{11}
+    \field{year}{2022}
+    \field{urlday}{31}
+    \field{urlmonth}{01}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_deutschjozsa_2022}{inreference}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{abstract}{%
+    The Deutsch–Jozsa algorithm is a deterministic quantum algorithm proposed
+  by David Deutsch and Richard Jozsa in 1992 with improvements by Richard
+  Cleve, Artur Ekert, Chiara Macchiavello, and Michele Mosca in 1998. Although
+  of little current practical use, it is one of the first examples of a quantum
+  algorithm that is exponentially faster than any possible deterministic
+  classical algorithm.The Deutsch–Jozsa problem is specifically designed to
+  be easy for a quantum algorithm and hard for any deterministic classical
+  algorithm. It is a black box problem that can be solved efficiently by a
+  quantum computer with no error, whereas a deterministic classical computer
+  would need a exponential number of queries to the black box to solve the
+  problem. More formally, it yields an oracle relative to which {EQP}, the
+  class of problems that can be solved exactly in polynomial time on a quantum
+  computer, and P are different.Since the problem is easy to solve on a
+  probabilistic classical computer, it does not yield an oracle separation with
+  {BPP}, the class of problems that can be solved with bounded error in
+  polynomial time on a probabilistic classical computer. Simon's problem is an
+  example of a problem that yields an oracle separation between {BQP} and
+  {BPP}.%
+    }
+    \field{booktitle}{Wikipedia}
+    \field{note}{Page Version {ID}: 1122661600}
+    \field{title}{Deutsch–Jozsa algorithm}
+    \verb{url}
+    \verb https://en.wikipedia.org/w/index.php?title=Deutsch%E2%80%93Jozsa_algo
+    \verb rithm&oldid=1122661600
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/FWQA8DA4/Deutsch–Jozsa_algorithm.
+    \verb html:text/html
+    \endverb
+    \field{day}{18}
+    \field{month}{11}
+    \field{year}{2022}
+    \field{urlday}{26}
+    \field{urlmonth}{01}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{hosgood_introduction_nodate}{book}{}
+    \name{author}{1}{}{%
+      {{hash=HAEaT}{%
+         family={Hosgood},
+         familyi={H\bibinitperiod},
+         given={Artur Ekert \{and\}\bibnamedelima Tim},
+         giveni={A\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim
+  a\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HAEaT1}
+    \strng{fullhash}{HAEaT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{abstract}{%
+    An introductory series of lectures on quantum computing.%
+    }
+    \field{title}{Introduction to Quantum Information Science}
+    \verb{url}
+    \verb https://qubit.guide/
+    \endverb
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/YFF8TPJV/qubit.guide.html:text/html
+    \endverb
+    \field{urlday}{26}
+    \field{urlmonth}{01}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_quantum_nodate}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{abstract}{%
+    A university quantum algorithms/computation course supplement based on
+  Qiskit%
+    }
+    \field{title}{Quantum Fourier Transform}
+    \verb{url}
+    \verb https://community.qiskit.org/textbook/ch-algorithms/quantum-fourier-t
+    \verb ransform.html
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/49DZIP8E/quantum-fourier-transform.
+    \verb html:text/html
+    \endverb
+    \field{urlday}{13}
+    \field{urlmonth}{02}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_quantum_2022}{inreference}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{abstract}{%
+    In quantum computing, the quantum Fourier transform ({QFT}) is a linear
+  transformation on quantum bits, and is the quantum analogue of the discrete
+  Fourier transform. The quantum Fourier transform is a part of many quantum
+  algorithms, notably Shor's algorithm for factoring and computing the discrete
+  logarithm, the quantum phase estimation algorithm for estimating the
+  eigenvalues of a unitary operator, and algorithms for the hidden subgroup
+  problem. The quantum Fourier transform was discovered by Don Coppersmith.The
+  quantum Fourier transform can be performed efficiently on a quantum computer
+  with a decomposition into the product of simpler unitary matrices. The
+  discrete Fourier transform on 2 n \{{\textbackslash}displaystyle
+  2{\textasciicircum}\{n\}\} amplitudes can be implemented as a quantum circuit
+  consisting of only O ( n 2 ) \{{\textbackslash}displaystyle
+  O(n{\textasciicircum}\{2\})\} Hadamard gates and controlled phase shift
+  gates, where n \{{\textbackslash}displaystyle n\} is the number of qubits.
+  This can be compared with the classical discrete Fourier transform, which
+  takes O ( n 2 n ) \{{\textbackslash}displaystyle
+  O(n2{\textasciicircum}\{n\})\} gates (where n \{{\textbackslash}displaystyle
+  n\} is the number of bits), which is exponentially more than O ( n 2 )
+  \{{\textbackslash}displaystyle O(n{\textasciicircum}\{2\})\} . The quantum
+  Fourier transform acts on a quantum state vector (a quantum register), and
+  the classical Fourier transform acts on a vector. Both types of vectors can
+  be written as lists of complex numbers. In the quantum case it is a sequence
+  of probability amplitudes for all the possible outcomes upon measurement
+  (called basis states, or eigenstates). Because measurement collapses the
+  quantum state to a single basis state, not every task that uses the classical
+  Fourier transform can take advantage of the quantum Fourier transform's
+  exponential speedup. The best quantum Fourier transform algorithms known (as
+  of late 2000) require only O ( n log ⁡ n ) \{{\textbackslash}displaystyle
+  O(n{\textbackslash}log n)\} gates to achieve an efficient approximation.%
+    }
+    \field{booktitle}{Wikipedia}
+    \field{note}{Page Version {ID}: 1123746557}
+    \field{title}{Quantum Fourier transform}
+    \verb{url}
+    \verb https://en.wikipedia.org/w/index.php?title=Quantum_Fourier_transform&
+    \verb oldid=1123746557
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/CH7NJKDK/Quantum_Fourier_transform.
+    \verb html:text/html
+    \endverb
+    \field{day}{25}
+    \field{month}{11}
+    \field{year}{2022}
+    \field{urlday}{04}
+    \field{urlmonth}{02}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_quantum_phase_estim}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{abstract}{%
+    A university quantum algorithms/computation course supplement based on
+  Qiskit%
+    }
+    \field{title}{Quantum Phase Estimation}
+    \verb{url}
+    \verb https://community.qiskit.org/textbook/ch-algorithms/quantum-phase-est
+    \verb imation.html
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/K938HG2F/quantum-phase-estimation.h
+    \verb tml:text/html
+    \endverb
+    \field{urlday}{27}
+    \field{urlmonth}{02}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_quantum_phase_estim_wiki}{inreference}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{abstract}{%
+    In quantum computing, the quantum phase estimation algorithm (also referred
+  to as quantum eigenvalue estimation algorithm), is a quantum algorithm to
+  estimate the phase (or eigenvalue) of an eigenvector of a unitary operator.
+  More precisely, given a unitary matrix U \{{\textbackslash}displaystyle U\}
+  and a quantum state {\textbar} ψ ⟩ \{{\textbackslash}displaystyle
+  {\textbar}{\textbackslash}psi {\textbackslash}rangle \} such that U
+  {\textbar} ψ ⟩ = e 2 π i θ {\textbar} ψ ⟩
+  \{{\textbackslash}displaystyle U{\textbar}{\textbackslash}psi
+  {\textbackslash}rangle =e{\textasciicircum}\{2{\textbackslash}pi
+  i{\textbackslash}theta \}{\textbar}{\textbackslash}psi {\textbackslash}rangle
+  \} , the algorithm estimates the value of θ \{{\textbackslash}displaystyle
+  {\textbackslash}theta \} with high probability within additive error ε
+  \{{\textbackslash}displaystyle {\textbackslash}varepsilon \} , using O ( log
+  ⁡ ( 1 / ε ) ) \{{\textbackslash}displaystyle
+  O({\textbackslash}log(1/{\textbackslash}varepsilon ))\} qubits (without
+  counting the ones used to encode the eigenvector state) and O ( 1 / ε )
+  \{{\textbackslash}displaystyle O(1/{\textbackslash}varepsilon )\}
+  controlled-U operations. The algorithm was initially introduced by Alexei
+  Kitaev in 1995.: 246 Phase estimation is frequently used as a subroutine
+  in other quantum algorithms, such as Shor's algorithm: 131  and the
+  quantum algorithm for linear systems of equations.%
+    }
+    \field{booktitle}{Wikipedia}
+    \field{note}{Page Version {ID}: 1133698428}
+    \field{title}{Quantum phase estimation algorithm}
+    \verb{url}
+    \verb https://en.wikipedia.org/w/index.php?title=Quantum_phase_estimation_a
+    \verb lgorithm&oldid=1133698428
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/IFQRU5VN/Quantum_phase_estimation_a
+    \verb lgorithm.html:text/html
+    \endverb
+    \field{day}{15}
+    \field{month}{01}
+    \field{year}{2023}
+    \field{urlday}{06}
+    \field{urlmonth}{03}
+    \field{urlyear}{2023}
+  \endentry
+
+  \entry{noauthor_simons_2023}{inreference}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    In computational complexity theory and quantum computing, Simon's problem
+  is a computational problem that is proven to be solved exponentially faster
+  on a quantum computer than on a classical (that is, traditional) computer.
+  The quantum algorithm solving Simon's problem, usually called Simon's
+  algorithm, served as the inspiration for Shor's algorithm. Both problems are
+  special cases of the abelian hidden subgroup problem, which is now known to
+  have efficient quantum algorithms. The problem is set in the model of
+  decision tree complexity or query complexity and was conceived by Daniel
+  Simon in 1994. Simon exhibited a quantum algorithm that solves Simon's
+  problem exponentially faster and with exponentially fewer queries than the
+  best probabilistic (or deterministic) classical algorithm. In particular,
+  Simon's algorithm uses a linear number of queries and any classical
+  probabilistic algorithm must use an exponential number of queries. This
+  problem yields an oracle separation between the complexity classes {BPP}
+  (bounded-error classical query complexity) and {BQP} (bounded-error quantum
+  query complexity). This is the same separation that the Bernstein–Vazirani
+  algorithm achieves, and different from the separation provided by the
+  Deutsch–Jozsa algorithm, which separates P and {EQP}. Unlike the
+  Bernstein–Vazirani algorithm, Simon's algorithm's separation is
+  exponential. Because this problem assumes the existence of a
+  highly-structured "black box" oracle to achieve its speedup, this problem has
+  little practical value. However, without such an oracle, exponential speedups
+  cannot easily be proven, since this would prove that P is different from
+  {PSPACE}.%
+    }
+    \field{booktitle}{Wikipedia}
+    \field{note}{Page Version {ID}: 1133798643}
+    \field{title}{Simon's problem}
+    \verb{url}
+    \verb https://en.wikipedia.org/w/index.php?title=Simon%27s_problem&oldid=11
+    \verb 33798643
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/7SVSJPJF/Simon's_problem.html:text/
+    \verb html
+    \endverb
+    \field{day}{15}
+    \field{month}{01}
+    \field{year}{2023}
+    \field{urlday}{31}
+    \field{urlmonth}{01}
+    \field{urlyear}{2023}
+  \endentry
+\enddatalist
+\endinput

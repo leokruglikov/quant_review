@@ -1,0 +1,155 @@
+\subsection*{Simons algorithm}
+Let's now consider the next algorithm, commonly known as the Simon's algorithm or the Simon's 
+problem. As usual we will treat the concept mathematically, where it is nicely shown in Wikipedia \cite{noauthor_simons_2023}.
+
+We first want to determine the problem statement. We are given some kind of function $f(x)$
+Often, we define this problem through the concept of the whether this function is \textit{one-to-one} or 
+\textit{two-to-one}. Both of these notions can be formally related to some function properties, namely surjection 
+and injection. Anyways, the \textit{one-to-one} function means that for any input $x$ to the function $f(x)$, there's 
+only one possible output. The two-to-one means that there's possibly several inputs for one single output. 
+For example, $f(0)=0, f(1)=1, f(2)=2, f(3)=3$ - which is a one-to-one function. Now, an example of a two-to-one function is 
+given by $f(0)=f(1)=0, f(2)=f(3)=1$. Note that for the inputs, they can be represented as binary strings, representing numbers.
+
+One can define it in another way, which is fully equivalent. Indeed, the problem now goes as follows:
+we're given a function $f(x)$ and the number/binary string $s$. We're now given a promise for $f(x)$:
+given $f(x)$ and $s$, $f(x)=f(y)$ if and only if $x\oplus y \in \{0^{\otimes n}, s\}$. That is, the output 
+will be same for two different inputs if and only if $x\oplus y$ is either $0^{\otimes n}$ or $s$. Here, we define 
+the operation $x \oplus y$ to be the bitwise XOR. That is, $x\oplus y \equiv (x_1 \text{ XOR } y_1, x_2 \text{ XOR } y_2, ..., x_n \text{ XOR } y_n)$.
+
+\begin{wraptable}{l}{7cm}
+  \begin{tblr}{c}
+    \hspace{1cm}
+    \Qcircuit @C=0.75em @R=1em {
+      \lstick{\ket{0}^{\otimes n}} & \qw & \gate{\mathcal{H}^{\otimes n}} & \qw & \multigate{1}{f} & \qw & \gate{\mathcal{H}^{\otimes n}} \qw &\qw \\
+      \lstick{\ket{0}^{\otimes n}} & \qw & \qw                            & \qw & \ghost{f}         & \qw & \qw & \qw 
+    }
+  \end{tblr}
+\end{wraptable}
+\label{cirq:simons}
+
+The goal of the algorithm is to determine the bitstring $s$. To schematically show that these two formulations (in terms of one-to-one \& two-to-one) 
+and the last one are equivalent, we first note that $a \oplus b = 0^{\otimes n} \iff a=b$.
+Another fact that we notice is the following: for some $x$ and $s$, we have that $x\oplus y = s$ is unique for $x$ if and only if $s \neq 0^{\otimes n}$. 
+In other words, the output of the operation $s$ is uniquely determined by the inputs only if $s=0^{\otimes n}$. Therefore, 
+we say that if $s\neq 0^{\otimes n}$, the function is two-to-one and if $s=0^{\otimes n}$, the function is one-to-one.
+
+Let's now consider the circuit of the algorithm. The circuit is given in \autoref{cirq:simons}.
+As usual, we're considering the initial state, which will go through the first $\mathcal{H}$ and we'll obtain the 
+usual result 
+
+\begin{align}
+  \mathcal{H}^{\otimes n} \ket{0}^{\otimes n}=\frac{1}{\sqrt{2^n}}\sum_{x=0}^{2^n-1} \ket{x}
+\end{align}
+
+Then we will apply our quantum function evaluation to the state on both registers:
+
+\begin{align}
+  \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes n} \xrightarrow{f(x)} \sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)\oplus x} =\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} 
+\end{align}
+
+Which is nothing but the state after the function evaluation and before the second $\mathcal{H}^{\otimes n}$ on the first register. 
+We will then obtain as usual:
+\begin{align}
+  &\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} \xrightarrow{(\mathcal{H}^{\otimes n})\otimes (\mathbbm{1}^{\otimes n}) } \\ 
+  &\sum_{x=0}^{2^n-1} \biggl[ \sum_{y=0}^{2^n-1} (-1)^{x\cdot y}\ket{y} \biggr] \ket{f(x)}=\sum_{y=0}^{2^n-1}\ket{y} \biggl[ \sum_{x=0}^{2^n-1}(-1)^{x\cdot y}\ket{f(x)} \biggr]
+\end{align}
+
+which is our state that will be measured. In fact, as usual, we've simplified the multiplicative factor. Therefore, the "correct" state that we'll be 
+measuring, will be as the one described above times the factor $\nicefrac{1}{(2^n)}$. Therefore for a certain $\ket{y}$, the probability of this 
+happening will be given by 
+\begin{align}
+  \Bigg| \Bigg| \frac{1}{2^n} \sum_{x=0}^{2^n-1} (-1)^{x\cdot y} \ket{f(x)} \Bigg| \Bigg|^2
+  \label{eq:simons_last_meas}
+\end{align}
+Now we consider the 2 possible cases (whether $f$ will be one-to-one or two-to-one). 
+
+If the function $f(x)$ is one-to-one, the \autoref{eq:simons_last_meas} will give us the probability of measuring some ket $\ket{y}$.
+An another way to write this probability in \autoref{eq:simons_last_meas}, we can write the probability for a state $\ket{y}$ to be measured will be 
+given by $|\bra{y}\ket{x}|$. Therefore, we have that the probability is given by nothing but 
+\begin{gather}
+  \Bigg< \frac{1}{2^n} \sum_{x=0}^{2^n-1} (-1)^{x\cdot y}\ket{f(x)} \Bigg| \frac{1}{2^n} \sum_{x'=0}^{2^n-1}(-1)^{x' \cdot y} \ket{f(x')} \Biggr> \\
+  (\frac{1}{2^n})^2 \sum_{\substack{x=0,x'=0\\ x,x'}} (-1)^{x\cdot y} (-1)^{x' \cdot y} \bra{f(x)}\ket{f(x')}, \text{ using that } \bra{a}\ket{a'}=\delta_{a,a'} \\
+   \frac{1}{2^{2n}} \sum_{x=0}^{2^n-1}(-1)^{2x\cdot y}= \frac{1}{2^{2n}} (2^n)\cdot(1)=\frac{1}{2^n}
+   \label{eq:simons_inner_product}
+\end{gather}
+Which is not surprising, as since $f$ is one-to-one, we're going through all the basis vectors.
+
+Now we consider the second case. That is, the case, where the function is not one-to-one. We can follow the nice trick shown 
+in Wikipedia \cite{noauthor_simons_2023}. When the function is not one-to-one, this means therefore that for some inputs $x_1$ \& $x_2$,
+we have the same outputs $f(x_1)=f(x_2)=z$, where $z$ is some kind of value in the range/domain of the function $f$. For the specific case, one may write for 
+the probability for some chosen $\ket{y}$ as for \autoref{eq:simons_last_meas}.
+\cite{noauthor_simons_2023}.
+\begin{gather}
+  \Bigg|\Bigg| \frac{1}{2^n}\sum_{x=0}^{2^n-1} (-1)^{x\cdot y} \ket{f(x)} \Bigg|\Bigg|^2 = 
+  \Bigg|\Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)}((-1)^{y\cdot x_1} +(-1)^{y\cdot x_2})\ket{z} \Bigg| \Bigg|^2
+  \label{eq:simons_z_range}
+\end{gather}
+\begin{wraptable}{l}{3cm}
+  \centering
+  \begin{tabular}{|c|c|c|}
+    \hline
+    $x_1$ & $x_2$ & $s$ \\
+    \hline
+    \hline
+    0 & 0 & 0 \\
+    \hline
+    1 & 0 & 1 \\
+    \hline
+    0 & 1 & 1 \\
+    \hline
+    1 & 1 & 0 \\
+    \hline
+  \end{tabular}
+  \caption{Truth table for XOR.}
+  \vspace{-1.0cm}
+  \label{table:xor_truth_table}
+\end{wraptable}
+
+Note that here we've changed the sum over $x$ i.e. over sum of the domain, to the sum over the range of its values $z$.
+We now note another important property for the XOR operation. The truth table of XOR is given by the \autoref{table:xor_truth_table}.
+From which we clearly see that $x_1 \otimes x_2 = s \iff x_1 \otimes s = x_2$. Therefore, if this is valid for one bit string, it 
+will also be valid for any bit strings of any length, as the bitwise XOR only operates on pairs of bits.
+Thus, by observing the property of $x_1 \otimes x_2 = s \iff x_1 \otimes s = x_2$, we can write the \autoref{eq:simons_z_range} 
+as
+\begin{gather}
+  \Bigg|\Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)}((-1)^{y\cdot x_1} +(-1)^{y\cdot x_2})\ket{z} \Bigg| \Bigg|^2 =\\
+  =\Bigg| \Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)}((-1)^{y\cdot x_1} +(-1)^{y\cdot (x_1 \otimes s)})\ket{z} \Bigg| \Bigg|^2 \\
+  =\Bigg| \Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)}((-1)^{y\cdot x_1} +(-1)^{y\cdot x_1 \otimes y\cdot s)})\ket{z} \Bigg| \Bigg|^2 \\
+  =\Bigg| \Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)} (-1)^{y\cdot x_1}(1+(-1)^{y\cdot s})\ket{z} \Bigg| \Bigg|^2 
+\end{gather}
+From where, we can observe some things: if the chosen $y$ happens to be such that $y\cdot s = 1$, then the probability (the sum given right above)
+will be given by 0 (the factor in front of $\ket{z}$ will be 0). Now, if the value of the product $y\cdot s = 0$, it will not be zero.
+instead, the sum becomes of the form 
+
+\begin{gather}
+  \Bigg| \Bigg| \frac{1}{2^n} \sum_{z\in \text{Range}(f)} (-1)^{y\cdot x_1}(2)\ket{z} \Bigg| \Bigg|^2 \\
+  \Bigg| \Bigg| \frac{1}{2^{n-1}} \sum_{z\in \text{Range}(f)} (-1)^{y\cdot x_1}\ket{z} \Bigg| \Bigg|^2 
+\end{gather}
+Using the same trick as in \autoref{eq:simons_inner_product}, we can deduce that the probability will be given by $\frac{1}{2^{n-1}}$.
+
+From these two cases, we can therefore deduce the following: the probability of measuring a certain $y$ if $s=0^{\otimes n}$ (the first case) will be given 
+by $\frac{1}{2^n}$.
+And the probability for a certain $y$ if $s\neq 0^{\otimes n}$, we have 2 (sub)cases. That is, depending on whether this $y$ will either obey
+$y\cdot s=0$ or $y\cdot s\neq 0$. If it is the case of $y\cdot s=0$, we will have 0 probability of measuring this $\ket{y}$. If, on the other hand,
+$y\cdot \neq 0$, it will be given by $\frac{1}{2^{n-1}}$. 
+
+
+Therefore, we deduce that in both cases, for some measured y, we will have that \underline{$y\cdot s =0$} (as in the first case, $s=0$ by definition and in the second, 
+if it is not the case, the probability of measuring the $y$ state will be zero).
+
+During the mathematical process, starting from \autoref{eq:simons_last_meas}, we considered some specific $\ket{y}$ that we'll get at the end/output.
+So at the end we'll get several $\ket{y}$'s with probability, depending on different cases, as discussed above. The key point here is that 
+these states, i.e. all $y$'s obey $y\cdot s = 0$.
+As provided in \cite{noauthor_simons_2023}, we use the classical post processing in order to obtain the necessary $s$ as required in the problem statement.
+It is important to note that, it may happen that there are "missing states", as there are sometimes 0 probability of observing some variables. 
+
+
+
+
+
+
+
+
+
+
+

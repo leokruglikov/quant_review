@@ -1,0 +1,120 @@
+\subsection*{Phase estimation}
+
+The phase estimation is an important algorithm, that does what its name suggests - to 
+estimate the phase of a system. That it, suppose there exists a state $\ket{\psi}$. Suppose then 
+there exists an operator $U\ket{\psi} = e^{2i\pi\theta}\ket{\psi}$. The goal of the algorithm 
+is thus to find the eigenvalue's $e^{2i\pi\phi\theta}$ argument $\theta$. The input of the algorithm is therefore 
+the state $\ket{\psi}$, as well as an input vector $\ket{0}^{\otimes ^m}$, which server as the counting 
+vector. So this $\ket{0}^{\otimes ^m}$ will accumulate the counting of the phase $\theta$.
+
+Let's consider the general circuit of the phase estimation algorithm \cite{noauthor_quantum_phase_estim}
+\cite{noauthor_quantum_phase_estim_wiki} and try to mathematically analyze the circuit in a more 
+mathematical way.
+
+\begin{table}[ht!]
+  \centering
+  \begin{tblr}{c}
+    \Qcircuit @C=1em @R=1em{
+      \lstick{\ket{0}}    & \qw & \gate{\mathcal{H}} & \ctrl{5}          & \qw & \qw               &\qw&\hdots&&\qw & \qw        & \qw                &\qw& \multigate{5}{\mathcal{F}^{-1}} & \qw \\
+      \lstick{\ket{0}}    & \qw & \gate{\mathcal{H}} & \qw               & \qw & \ctrl{4}          &\qw&\hdots&&\qw & \qw        & \qw                &\qw& \ghost{\mathcal{F}^{-1}}        & \qw \\
+      \hdots              & \qw & \hdots             &                   & \qw & \hdots            &   &\hdots&&\qw & \qw        & \qw                &\qw& \ghost{\mathcal{F}^{-1}}        & \qw \\
+      \lstick{\ket{0}}    & \qw & \gate{\mathcal{H}} & \qw               & \qw & \qw               &\qw&\hdots&&\qw & \ctrl{2}   &  \qw               &\qw& \ghost{\mathcal{F}^{-1}}        & \qw \\
+      \lstick{\ket{0}}    & \qw & \gate{\mathcal{H}} & \qw               & \qw & \qw               &\qw&\hdots&&\qw & \qw        & \ctrl{1}           &\qw& \ghost{\mathcal{F}^{-1}}        & \qw \\
+      \lstick{\ket{\psi}} & \qw & \qw                &\gate{U^{2^{m-1}}} & \qw & \gate{U^{2^{m-2}}}&\qw&\hdots&&\qw & \gate{U^{2^1}} & \gate{U^{2^0}} &\qw& \ghost{\mathcal{F}^{-1}}        & \qw 
+    }
+  \end{tblr}
+  \caption{}
+  \label{cirq:phase_estim}
+\end{table}
+
+Note that there are some similarities with the QFT, that is, the operator $U$ raised to the powers $2^{k}$. 
+
+So as usual, we have that the initial state is given by nothig but $\ket{0}^{\otimes^m}\otimes \ket{\psi}$. Then, the next step is to apply the $\mathcal{H}$ 
+on the counting bits. We have then 
+\begin{gather}
+  \ket{\psi}^{\otimes m}\ket{\psi} \xrightarrow{\mathcal{H}^{\otimes^m}\otimes \mathbbm{1}} \frac{1}{2^{\nicefrac{2}{n}}} \bigl (\ket{0} + \ket{1} \bigr)^{\otimes^{m}}\otimes \ket{\psi}
+\end{gather}
+
+Then, we sequencially apply the different $U^{2^k}$ operators. This is similar to the operators found in the QFT. As the eigenvalue of the $U$ operator 
+is given by $e^{2\pi i \theta}$ the power of this operator can be expressed by: 
+\begin{gather}
+  U^{2^k}\ket{\psi} = e^{2\pi i 2^{k}\theta}\ket{\psi}
+\end{gather}
+
+Therefore, the consecutive applications of these $U^{k}$ are given below. We should also remember, that the controlled $U$ operator in the case of e.g. 2 qubits with 
+the 0th as the control and the 1st as the target, will be given by $U = \ket{0}\bra{0}\otimes \mathbbm{1} + \ket{1}\ket{1}\otimes U$
+\begin{gather}
+  \frac{1}{2^{\frac{n}{2}}} \bigl (\ket{0} + \ket{1} \bigr)^{\otimes^{m}}\otimes \ket{\psi} \xrightarrow{\text{apply the controlled }U^{2^{m-1}}} \\
+  \frac{1}{2^{\frac{n}{2}}}\biggl(\ket{0}\bra{0}\otimes (\mathbbm{1}^{\otimes^{m-1}}) \otimes \mathbbm{1} + \ket{1}\bra{1}\otimes (\mathbbm{1}^{\otimes^{m-1}}) \otimes U \biggr) 
+  \frac{1}{2^{\frac{n}{2}}}\biggl[\frac{1}{2^{\frac{2}{n}}}\bigl (\ket{0} + \ket{1} \bigr)\otimes \bigl (\ket{0} + \ket{1} \bigr)^{\otimes^{m-1}}\otimes \ket{\psi} \biggr]= \\
+  = \frac{1}{2^{\frac{n}{2}}}\biggl[ \ket{0}\otimes (\ket{0}+\ket{1})^{\otimes^{m-1}} \otimes \ket{\psi} + \ket{1}\otimes (\ket{0}+\ket{1})^{\otimes^{m-1}}\otimes U\ket{\psi} \biggr] = \\
+  \frac{1}{2^{\frac{n}{2}}}\biggl[ \ket{0}\otimes (\ket{0}+\ket{1})^{\otimes^{m-1}} \otimes \ket{\psi} + \ket{1}\otimes (\ket{0}+\ket{1})^{\otimes^{m-1}}\otimes e^{2\pi i2^{m-1}\theta}\ket{\psi} \biggr] = \\
+  = \frac{1}{2^{\frac{n}{2}}}\biggl[ \ket{0} + e^{2\pi i2^{m-1}\theta}\ket{1} \biggr] \otimes \biggl[ \ket{0}+\ket{1} \biggr]^{\otimes^{m-1}}\otimes \ket{\psi}
+\end{gather}
+This application can be performed several times. At the end, using the similar development, it is possible to 
+show that after the consecutive applications of the $U$ operator, we obtain at the end 
+\begin{gather}
+  \frac{1}{2^{\frac{2}{n}}} \biggl[ \ket{0} + e^{2\pi i2^{m-1}\theta}\ket{1}  \biggr] \otimes \biggl[  \ket{0} + e^{2\pi i2^{m-2}\theta}\ket{1} \biggr] \otimes 
+  \cdots \otimes \biggl[  \ket{0} + e^{2\pi i2^{0}\theta}\ket{1} \biggr] \otimes \ket{\psi} = \\
+  = \frac{1}{2^{\frac{2}{n}}}\biggl[ \sum_{k=0}^{2^n-1} e^{2\pi i k \theta} \ket{k} \biggr]\otimes \ket{\psi}
+\end{gather}
+
+So this is the state before we apply the inverse Fourier transform. However, let's first quickly recall how does the simple Fourier transform work.
+\begin{gather}
+  \ket{y} \mapsto \biggl(\ket{0} + e^{\frac{2\pi i}{2^1}x}\ket{1}\biggr)\otimes \biggl(\ket{0} + e^{\frac{2\pi i}{2^2}x}\ket{1}\biggr) \cdots \biggl(\ket{0} + e^{\frac{2\pi i}{2^{n}}x}\ket{1}\biggr) = \\
+  \ket{y} \mapsto \biggl(\sum_{k=0}^{N-1}\omega_N^{yk}\ket{k} \biggr)
+\end{gather}
+The inverse fourier transform simply swaps the sign of the exponential of the $\omega_N$.
+That is, we can define the operator of the inverse Fourier transform: 
+\begin{gather}
+  \ket{y} \mapsto \biggl(\sum_{k=0}^{N-1}\omega_N^{-yk}\ket{k} \biggr) 
+\end{gather}
+and the operator: 
+\begin{gather}
+  \widehat{\mathcal{F}^{-1}} = \frac{1}{2^\frac{n}{2}}\sum_{x=0}^{2^n-1}\sum_{k=0} \omega_N^{-xk}\ket{k}\bra{x} \\
+  \widehat{\mathcal{F}^{-1}} = \frac{1}{2^\frac{n}{2}}\sum_{x=0}^{2^n-1}\sum_{k=0} e^{-\frac{2\pi ixk}{2^n}}\ket{k}\bra{x}
+\end{gather}
+
+So we have that the state that the $\mathcal{F}^{-1}$ must be applied to is given by 
+
+\begin{gather}
+  \frac{1}{2^{\frac{n}{2}}}\biggl[ \sum_{k=0}^{2^n-1} e^{2\pi i k \theta} \ket{k} \biggr]\otimes \ket{\psi} \equiv 
+  \frac{1}{2^{\frac{n}{2}}}\biggl[ \sum_{y=0}^{2^n-1} e^{2\pi i y \theta} \ket{y} \biggr] 
+\end{gather}
+
+Let's now try to apply the inverse Fourier in it: 
+
+\begin{gather}
+  \widehat{\mathcal{F}^{-1}} = \frac{1}{2^{\frac{n}{2}}} \biggl[ \sum_{y=0}^{2^n-1} e^{2\pi i y \theta} \ket{y} \biggr]  = \\
+  \frac{1}{2^n}\sum_{x=0}^{2^n-1}\sum_{k=0} e^{-\frac{2\pi ixk}{2^n}}\ket{k}\bra{x} \biggl[ \sum_{y=0}^{2^n-1} e^{2\pi i y \theta} \ket{y} \biggr] = \\
+  \frac{1}{2^n} \sum_{y=0}^{2^n-1} \sum_{x=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-\frac{2\pi ixk}{2^n}} e^{2\pi i y \theta} \ket{k}\bra{x} \ket{y} \stackrel{\bra{x}\ket{y}=\delta_{xy}}= \\
+  \frac{1}{2^n} \sum_{y=0}^{2^n-1} \sum_{x=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-\frac{2\pi ixk}{2^n}} e^{2\pi i y \theta} \ket{k}\bra{x} \ket{y} \stackrel{\bra{x}\ket{y}=\delta_{xy}}= \\
+  \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-\frac{2\pi iyk}{2^n}} e^{2\pi i y \theta} \ket{k} = 
+  \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-2\pi iy(\frac{k}{2^n}- \theta)} \ket{k} = \\
+  = \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{\frac{-2\pi iy}{2^n}(k - \theta 2^n)} \ket{k}
+\end{gather}
+Which is the last state after the inverse Fourier transofrm. To be more precise, 
+\begin{gather}
+  \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{\frac{-2\pi iy}{2^n}(k - \theta 2^n)} \ket{k} \otimes \ket{\psi}
+\end{gather}
+Now, we can ask ourselves, how are distributed the probabilities of measuring this final state? 
+It is clear, that if $k=\theta 2^n$, the probability of measuring the state $\ket{k} = \ket{\theta 2^{n}}$ is the maximum. Indeed, in this case, 
+the exponential, $e^{\theta 2^n - (k=)\theta 2^n}$ will have the maximum value. 
+
+Therefore, at the end, we will know what is theta, by measuring the first m qubits.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

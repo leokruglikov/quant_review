@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Allows you to insert figures
+\usepackage{amsmath} % Allows you to do equations
+\usepackage{fancyhdr} % Formats the header
+\usepackage{geometry} % Formats the paper size, orientation, and margins
+\setlength{\parindent}{0pt} % no paragraph indents
+\setlength{\parskip}{1em} % paragraphs separated by one line
+\usepackage[format=plain,
+            font=it]{caption} % Italicizes figure captions
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\renewcommand{\headrulewidth}{0pt}
+\geometry{letterpaper, portrait, margin=1in}
+\setlength{\headheight}{14.49998pt}
+\usepackage{mathtools}
+\usepackage[normalem]{ulem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cite}
+\usepackage{nicefrac}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage[all]{xy}
+\usepackage{qcircuit}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{filecontents}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage{xcolor}
+\usepackage{unicode-math}
+\usepackage{tabularray}
+\usepackage{bbm}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\addbibresource{./q.bib}
+
+
+
+\title{Basic review of basic quantum computing algorithms}
+\begin{document}
+\maketitle
+
+\newcommand{\qvdots}{% \vdots for qcircuit
+  \raisebox{0.3em}{\ensuremath{\vdots}}%
+}
+
+
+
+\include{./notions.tex}
+\newpage
+\include{./deutsch.tex}
+\include{./bern_vazirani.tex}
+\include{./simons.tex}
+\include{./fourier.tex}
+\include{./phase_estim.tex}
+
+
+\newpage
+\bibliographystyle{plainurl}
+\printbibliography
+
+
+
+\end{document}

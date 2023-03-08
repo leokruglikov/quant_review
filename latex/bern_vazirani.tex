@@ -1,0 +1,56 @@
+\subsection*{Bernstein-Vazirani algorithm}
+The next algorithm is the Bernstein-Vazirani algorithm, which also gives a 
+speedup over the classical solution. The technique to solve such problem is similar to the 
+Deutsch-Jozsa's one, that is, uses a phase kick-back trick.
+
+The problem that the Bernstein-Vazirani algorithm aims to solve is the following: we have a function $f(x)$ which has the form 
+$f(x): \{0,1\}^n \rightarrow \{0,1\}$ and $f(x): x \mapsto s \cdot x=s_1 x_1 \oplus s_2 x_2 \oplus ... \oplus s_n x_n$, for some 
+"secret" string $s$, for which we denote the corresponding function $f_s(x)$. The goal of the Bernstein-Vazirani problem is 
+to determine this "secret" string $s$.
+
+
+\begin{wraptable}{l}{7cm}
+  \begin{tblr}{r}
+    \Qcircuit @C=1em @R=1em{
+      \lstick{\ket{0}^{\otimes n}}& \qw & \gate{\mathcal{H}^{\otimes n}} & \qw & \ctrl{1} & \qw & \gate{\mathcal{H}^{\otimes n}} & \qw \\
+      \lstick {\ket{-}}& \qw & \qw                & \qw & \gate{f} & \qw & \qw   & \qw               
+    }
+  \end{tblr}
+\end{wraptable}
+\label{cirq:bern_vazirani}
+
+As usual, in order to implement this algorithm, we need a quantum oracle for $f_s(x)$. In this case, the quantum oracle will be 
+defined as for the Deutsch-Jozsa's algorithm as $\ket{x}\otimes \ket{y} \xrightarrow{U_{f_s}}{} \ket{x}\otimes \ket{y\oplus f_s(x)}$.
+Similar to the case of the Deutsch-Jozsa, the state that will get through the oracle will be $\ket{x}\otimes \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+The result will be given by $\ket{x}(-1)^{f_s(x)}$ as shown in \autoref{eq:deutsch_josza_C}, where we decided to "drop" the second part with 
+$\ket{-}$. The circuit is given in \autoref{cirq:bern_vazirani}.
+
+Let's now show mathematically the Bernstein-Vazirani algorithm:
+\begin{align}
+  \ket{0}^{\otimes n} \xrightarrow{\mathcal{H}^{\otimes n}} \sum_x^{2^n} \ket{x}
+\end{align}
+which is the state of the top-register before we reach the quantum function evaluation. Further we write:
+\begin{align}
+  \sum_x^{2^n} \ket{x}(\ket{0}-\ket{1}) &\xrightarrow{U_f} \sum_x^{2^n} (-1)^{f_s(x)}\ket{x} \\ 
+                                        &=\sum_x^{2^n} (-1)^{s\cdot x} \ket{x} 
+\end{align}
+Then, we need to apply the Hadamard gate to this state. We will then write the following:
+\begin{align}
+  \sum_x^{2^n} (-1)^{s\cdot x} \ket{x} \xrightarrow[\text{\autoref{eq:hadamard_on_generic}}]{\mathcal{H}^{\otimes n}} \sum_x^{2^n} (-1)^{x\cdot s} 
+  \sum_y^{2^n} (-1)^{x \cdot y} \ket{y} =\\
+\sum_x^{2^n} \sum_y^{2^n} (-1)^{x\cdot s} (-1)^{x \cdot y} \ket{y} =\\
+\sum_{x,y}^{2^n} (-1)^{(x\cdot s + x\cdot y)} \ket{y}
+\end{align}
+We now claim that the last expression $\sum_{x,y} (-1)^{x\cdot s + x\cdot y}\ket{y} = \ket{s}$. It is not straightforward to see so we can try to prove it (as
+in \cite{noauthor_bernsteinvazirani_2022}).
+We first can rewrite $x\cdot s + x\cdot y=x\cdot (s\oplus y)$. 
+We can now take one fixed $\ket{y}$ and sum over the $\ket{x}$'s:
+\begin{align}
+  \sum_{x} (-1)^{x \cdot (s \oplus y)}
+\end{align}
+Now, if the chosen $\ket{y}$ is equal to the $s$, the term $s\oplus y$ will be clearly zero. Therefore, if the chosen $y$ 
+happens to be the same as $s$, the probability of obtaining it will be maximum (we're adding all ones, as $(-1)^{x\cdot(s\oplus y)} = \sum (-1)^{0}$).
+Consequently the only non-zero term is associated to the state $\ket{y}=\ket{s}$.
+
+Thus, using this algorithm, we're able to find the state $\ket{y}=\ket{s}$ related to this "secret" string.
+

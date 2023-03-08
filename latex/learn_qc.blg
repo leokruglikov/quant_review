@@ -1,0 +1,71 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/Arch Linux)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: learn_qc.aux
+The style file: biblatex.bst
+A level-1 auxiliary file: ./notions.aux
+A level-1 auxiliary file: ./deutsch.aux
+A level-1 auxiliary file: ./bern_vazirani.aux
+A level-1 auxiliary file: ./simons.aux
+A level-1 auxiliary file: ./fourier.aux
+A level-1 auxiliary file: ./phase_estim.aux
+Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=8) to 20 items from 10.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: learn_qc-blx.bib
+Database file #2: ./q.bib
+Biblatex version: 3.18
+Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+You've used 9 entries,
+            6399 wiz_defined-function locations,
+            1266 strings with 18175 characters,
+and the built_in function-call counts, 47986 in all, are:
+= -- 1295
+> -- 4985
+< -- 401
++ -- 4502
+- -- 4319
+* -- 1925
+:= -- 6282
+add.period$ -- 0
+call.type$ -- 9
+change.case$ -- 41
+chr.to.int$ -- 474
+cite$ -- 16
+duplicate$ -- 3590
+empty$ -- 3718
+format.name$ -- 47
+if$ -- 6578
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 0
+newline$ -- 229
+num.names$ -- 41
+pop$ -- 2542
+preamble$ -- 1
+purify$ -- 36
+quote$ -- 0
+skip$ -- 1095
+stack$ -- 0
+substring$ -- 3157
+swap$ -- 1377
+text.length$ -- 323
+text.prefix$ -- 8
+top$ -- 1
+type$ -- 294
+warning$ -- 0
+while$ -- 470
+width$ -- 0
+write$ -- 221

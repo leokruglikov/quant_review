@@ -1,0 +1,7 @@
+codes/
+latex/*.aux
+latex/*.fls
+latex/*.out
+latex/*.log
+latex/*.fdb_latexmk
+texput.log

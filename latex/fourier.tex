@@ -1,0 +1,259 @@
+\subsection*{Fourier transform}
+The quantum Fourier algorithm is, in my opinion, the "first useful algorithm" considered here...
+Lets recall the (not very formal) definition of the classical Fourier transform. It is an operation $\mathcal{F}$ 
+transforming some function $f(x)$ to an another function $f(y)$.
+\begin{gather}
+  f(x) \xrightarrow{\mathcal{F}} f(y) \; : \; f(y) = \int^{+\infty}_{-\infty}dx f(x) e^{-i2\pi y x}
+\end{gather}
+From that, one can define the concept of the discrete fourier transform. We use the analogy/mapping of the 
+interval to a vector. That is, we can discretize some interval into a vector of $N$ elements $\vec{v}=(v_0, v_1, ..., v_{N-1})$.
+We call the discretized version of the Fourier transform, without surprise, the Discrete Fourier Transform or DFT and defined by the mapping 
+between two vectors $\vec{x}=(x_0, x_1,..., x_{N-1})$ to $\vec{y}=(y_0, y_1,...,y_{N-1})$.
+\begin{gather}
+  y_k = \sum_{n=0}^{N-1} x_n e^{-\frac{i2\pi}{N}kn}
+\end{gather}
+
+To a very similar manner, one can define the quantum fourier transform, which, instead of function-to-function and vector-to-vector mappings, 
+there's quantum state to quantum state mapping. Namely, the Fourier transform maps some quantum state $\ket{x}\equiv \sum x_i \ket{i}$ to 
+$\ket{y}=\sum y_i\ket{i}$ for some basis vectors $\{\ket{i}\}_{i\in \mathbb{N}}$. Thus we obtain the quantum Fourier transform's definition 
+\begin{gather}
+  \ket{y}\xrightarrow{\mathcal{F}} \ket{x}\\
+  y_k=\frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} x_n \omega_N^{kn} \text{ , with } \omega_N \equiv e^{i\frac{2\pi}{N}} \text{ and } k\in [0, N-1]
+  \label{eq:qft_definition_components}
+\end{gather}
+Note that here the sign of $\omega$'s power is unimportant and is nothing but a convention. We also note the inverse Fourier transform, given by 
+\begin{gather}
+  \ket{x}\xrightarrow{\mathcal{F}} \ket{y}\\
+  x_k=\frac{1}{\sqrt{N}} \sum_{n=0}^{N-1} y_n \omega_N^{-kn} \text{ , with } \omega_N \equiv e^{i\frac{2\pi}{N}} \text{ and } k\in [0, N-1]
+\end{gather}
+as shown in beautiful Wikipedia \cite{noauthor_quantum_2022}, we can represent the quantum Fourier transform with 
+\begin{gather}
+  \ket{x} \xmapsto{\mathcal{F}_{\text{quant}}} \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1}\omega_N^{xk}\ket{k}
+  \label{eq:qft_mapsto}
+\end{gather}
+
+Or, similarly, we can use the nice ket-bra representation of the (unitary) QFT operator \cite{noauthor_quantum_nodate}:
+\begin{gather}
+  \mathcal{F}=\frac{1}{\sqrt{N}} \sum_{x=0}^{N-1} \sum_{k=0}^{N-1} \omega_{N}^{xk}\ket{k}\bra{x}
+\end{gather}
+
+In addition to all that, we can also represent the quantum Fourier transform as a $(N-1)\times (N-1)$ matrix operation, acting on a vector.
+\begin{gather}
+  F_N=\frac{1}{\sqrt{N}} 
+  \begin{bmatrix}
+    1     & 1     & 1     & 1     & \cdots & 1    \\
+    1     &\omega &\omega^2 & \omega^3 & \cdots & \omega^{N-1}\\
+    1     &\omega^2 &\omega^4 & \omega^6 & \cdots & \omega^{2(N-1)}\\
+    1     &\omega^3 &\omega^6 & \omega^9 & \cdots & \omega^{3(N-1)}\\
+    \vdots &\vdots  & \vdots  & \vdots   & \ddots & \vdots        \\
+    1      & \omega^{N-1}&\omega^{2(N-1)}&\omega^{3(N-1)} & \cdots & \omega^{(N-1)(N-1)}
+  \end{bmatrix}
+\end{gather}
+
+
+Now, before considering some general cases of the Quantum Fourier transform and circuits, let's consider first some basic examples 
+with small number of qubits and other considerations.
+
+First of all \cite{noauthor_quantum_nodate}, we can consider the Fourier Transform as not changing the initial state, but rather 
+changing it to a different representation in the so-called fourier basis. That is, $\mathcal{F}\ket{x}=\ket{\tilde{x}}$.
+
+
+\paragraph{}
+Now let's consider one qubit system given by the most general expression $\ket{\psi}=\alpha \ket{0} + \beta \ket{1}$.
+The one qubit, as usual consists of 2 states (in the Z-basis). We can now look at all the previous expressions 
+written above, to have that $N=2$. Using that, we can use, for example, the \autoref{eq:qft_mapsto}, or the component-by-component 
+expression \autoref{eq:qft_definition_components}.
+Thus, for the 1 qubit system, we have 2 components that we'll obtain. We will denote the components of the vector/state $\ket{y}$
+by $y_0$ and $y_1$. The components of the "input vector" $\ket{\psi}$ with basis $\ket{0}$ and $\ket{1}$, are given by respectively $\alpha$
+and $\beta$. Thus, using the \autoref{eq:qft_definition_components} and the definition of $\omega$ , we have by components:
+\begin{gather}
+  y_0= \frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}\omega_{N}^{kn} x_n \stackrel{N=2, k=0}{=} 
+  \frac{1}{\sqrt{2}}\biggl( \alpha e^{\frac{i2\pi}{2}\cdot0\cdot0} + \beta e^{\frac{i2\pi}{2}\cdot 0\cdot 1} \biggr)=
+  \frac{1}{\sqrt{2}}(\alpha + \beta )\\
+  y_1= \frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}\omega_{N}^{kn} x_n \stackrel{N=2,k=1}{=} 
+  \frac{1}{\sqrt{2}}\biggl( \alpha e^{\frac{i2\pi}{2}\cdot1 \cdot0} + \beta e^{\frac{i2\pi}{2}\cdot 1\cdot 1} \biggr)=
+  \frac{1}{\sqrt{2}}(\alpha + \beta e^{i\pi})=\frac{1}{\sqrt{2}}(\alpha - \beta) 
+\end{gather}
+
+With that, we see that the state $\alpha\ket{0} + \beta\ket{1}$ gets transformed to 
+$\frac{(\alpha+\beta)}{\sqrt{2}}\ket{0} + \frac{(\alpha - \beta)}{\sqrt{2}}\ket{1}$.
+One may notice that this can be rewritten as 
+$\frac{\alpha}{\sqrt{2}}(\ket{0}+\ket{1}) + \frac{\beta}{\sqrt{2}}(\ket{0}-\ket{1})$, which 
+is nothing but $\alpha \ket{+} + \beta \ket{-}$. In other words, 
+$\alpha \ket{0} + \beta \ket{1} \xrightarrow{\mathcal{F}_{N=2}} \alpha \ket{+} + \beta \ket{-}$, which 
+is nothing but our Hadamard gate $\mathcal{H}$. Thus, the Fourier transform of 2 state qubit is 
+the $\mathcal{H}$. As it is mentioned in \cite{noauthor_quantum_nodate}, we can write the obtained 
+$\alpha \ket{0} + \beta \ket{1} \xrightarrow{\mathcal{F}_{N=2}} \tilde{\alpha} \ket{0} + \tilde{\beta} \ket{1}$
+, which we call the \textit{Fourier basis}.
+
+Now, still following the path given in \cite{noauthor_quantum_nodate}, we can try to describe 
+this transformation for a generic $n$ qubit case. In this case, $N=2^n$. Then, we can write 
+for the generic case:
+\begin{gather}
+  \mathcal{F}_N \ket{x} = \frac{1}{\sqrt{N}}\sum_{y=0}^{N-1} \omega_N^{yx}\ket{y} =\\ 
+                        = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} e^{i\frac{2\pi xy}{2^n}} \ket{y}
+\label{eq:qft_generic_1}
+\end{gather}
+, now, we can use the fact that $\ket{y}$ represents a tensor product $\bigotimes_i\ket{y_i}$ , 
+with $\ket{y_i}\in \{0,1\}$. We elaborate then further on the \autoref{eq:qft_generic_1}:
+\begin{gather}
+  \mathcal{F}_N \ket{x} = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} e^{i2\pi (\sum_k \frac{y_k}{2^k})x} \ket{y_0 y_1 y_2...y_n}
+  \label{eq:qft_generic_2}
+\end{gather}
+We note however that in \autoref{eq:qft_generic_2}, we used the fact that 
+$\nicefrac{y}{2^n}=\sum_k^n \nicefrac{y_k}{2^k}$. This is true due to the definition of a binary 
+number notation. Indeed, some number $s$ can be represented in binary in the form of 
+$s=\sum_{k=1}^{n} s_k 2^k$, with $n$ being the most signicative bit. Thus, by dividing the whole expression 
+by $2^n$, we will get $\nicefrac{s}{2^n}=\sum_{k=1}^{n} s_k 2^{k-n}$. The desired expression expression 
+is obtained using the difference in the position of the most/least significant bits, here, 
+followed in \cite{noauthor_quantum_nodate}\footnote{It is possible to check that this is true for 
+any representations of binary numbers not depending on LSB/MSB's position}.
+Now, continuing to expand \autoref{eq:qft_generic_2}, we have:
+\begin{gather}
+  \mathcal{F}_N \ket{x} = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} e^{i2\pi (\sum_k \frac{y_k}{2^k})x}\ket{y_0 y_1 y_2...y_n} \\
+  = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} \prod_{k}^{n} e^{i2\pi \frac{y_k}{2^k}}\ket{y_0 y_1 y_2...y_n}
+\end{gather}
+Now, one can write the sum $\sum_{y=0}^{N-1}$ over the $\ket{y_0y_1y_2...y_k}$ 
+as the sum over the components $y_k$ of the $\ket{y_0y_1y_2...y_k}$ as 
+$\sum_{y_0=0}^{1}\sum_{y_1=0}\sum_{y_2=0}...\sum_{y_n=0}$.
+The last step \cite{hosgood_introduction_nodate} is to simply rewrite as a 
+product of different states. That is,
+\begin{gather}
+  \mathcal{F}_N \ket{x} = \frac{1}{\sqrt{N}} \sum_{y=0}^{N-1} \prod_{k}^{n} e^{i2\pi \frac{y_k}{2^k}}\ket{y_0 y_1 y_2...y_n} = 
+  \bigotimes_{k=1}^{n}\biggl( \ket{0}+e^{2i\pi\frac{x}{2^k}}\ket{1} \biggr)
+\end{gather}
+
+\begin{table}[!hbt]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    $CROT_k=
+    \begin{bmatrix}
+      \mathbbm{1}& 0 \\
+      0 & UROT_k\\
+    \end{bmatrix}
+    $ & 
+    $UROT_k = 
+    \begin{bmatrix}
+      1 & 0 \\
+      0 & e^{\frac{2\pi i}{2^k}}\\
+    \end{bmatrix}
+    $\\
+    \hline
+  \end{tabular}
+  \caption{The definitions of the $CROT_k$ and $UROT_k$ operators.}
+  \label{table:qft_crot_urot}
+\end{table}
+
+Now, we're in position to consider the Quantum circuit of the fourier transform. Before that, we'll first consider the 
+building blocks of the QFT, that is, the 2 gates-the $CROT_k$ and the $UROT_k$. Their representations are given in \autoref{table:qft_crot_urot}.
+The action of the $CROT_k$ operator can also be described as follows \cite{noauthor_quantum_nodate}: 
+\begin{gather}
+  CROT_k \ket{0\psi} = \ket{0 \psi}\\
+  CROT_k \ket{1\psi} = e^{\frac{2\pi i}{2^k}\psi}\ket{1 \psi}, \text{ with } \ket{\psi} \text{ is a binary string}
+\end{gather}
+We can now consider the circuit of the QFT.
+First, for 2 qubits, the 2-qubit QFT:
+\begin{table}[!hbt]
+  \centering
+\begin{tblr}{c}
+  \Qcircuit @C=1em @R=1em{
+    \lstick{\ket{x_1}} & \qw & \gate{\mathcal{H}} &  \ustick{A} \qw & \gate{UROT_2} & \qw \\
+    \lstick{\ket{x_2}} & \qw & \qw                &  \qw            & \ctrl{-1}     & \qw
+  }
+\end{tblr}
+\end{table}
+Let's now write our usual description of the circuit, starting at some states $\ket{x_1}\otimes\ket{x_2}$. 
+The first gate will give the state at $A$: $\ket{\psi_A}=\mathcal{H}\otimes \mathbbm{1} (\ket{x_1}\otimes \ket{x_2}) = 
+\frac{1}{\sqrt{2}}(\ket{0}+e^{\frac{2\pi i}{2}x_1}\ket{1})\otimes \ket{x_2}$. Now, we can apply the $CROT_2$ operator, which, in bra-ket notation gives 
+$CROT_2=\mathbbm{1}\otimes\ket{0}\bra{0}+UROT_2\otimes \ket{1}\bra{1}$. Thus, by applying this operator to the state at A,
+we get 
+\begin{gather}
+CROT_2\biggl(\frac{1}{\sqrt{2}} \bigl(\ket{0}+e^{\frac{2\pi i}{2}x_1}\ket{1}\bigr)\otimes \ket{x_2}\biggr)=\\
+=\biggl(\mathbbm{1}\otimes\ket{0}\bra{0}+UROT_2\otimes \ket{1}\bra{1}\biggr) \biggl(\frac{1}{\sqrt{2}}(\ket{0}\otimes\ket{x_2}+e^{\frac{2\pi i}{2}x_1}\ket{1}\otimes\ket{x_2})\biggr)=\\
+=\frac{1}{\sqrt{2}}\biggl(\ket{0}\otimes \bra{0}\ket{x_2} + e^{\frac{2\pi i}{2}x_1}\ket{1}\otimes \bra{0}\ket{x_2}) \biggr)+\\
++ \frac{1}{\sqrt{2}}\biggl(\ket{0}\otimes \bra{1}\ket{x_2} + 
+  [e^{\frac{2\pi i}{2}x_2}+e^{\frac{2\pi i}{2^2}x_2}]\otimes\bra{1}\ket{x_2}\biggr)
+\end{gather}
+which will give different outcomees for different inputs.
+Equivalently, in a less messy manner, \cite{noauthor_quantum_nodate}, we can write:
+\begin{gather}
+  CROT_2\biggl(\frac{1}{\sqrt{2}} \bigl(\ket{0}+e^{\frac{2\pi i}{2}x_1}\ket{1}\bigr)\otimes \ket{x_2}\biggr)\stackrel{\text{ctrl.-2, targ.-1}}{=}\\ 
+  = \frac{1}{\sqrt{2}}\biggl( \ket{0}+ [e^{\frac{2\pi i}{2}x_1} + e^{\frac{2\pi i}{2^2}x_2}]\ket{1}\biggr) \otimes \ket{x_2}
+\end{gather}
+With this idea, let's finally try to generalize it for a more generic input of $n$ qubits.
+This by \textit{replacing} the $\otimes\ket{x_2}$ by $\otimes \ket{x_2x_3...x_n}$.
+Therefore, the state after the first $UROT_2$ will be given by 
+$\frac{1}{\sqrt{2}}\biggl( \ket{0}+ [e^{\frac{2\pi i}{2}x_1} + e^{\frac{2\pi i}{2^2}x_2}]\ket{1}\biggr) \otimes \ket{x_2x_3...x_n}$
+Then, the next step will undergo the next $n$ controlled $UROT_k$ operators with the $k$ qubit being the controlled qubit and 
+the first qubit being the target. After all the $n$ gates (using the same logic as for the 2-qubit systems), we will get the 
+state \cite{noauthor_quantum_nodate}:
+\begin{gather}
+\frac{1}{\sqrt{2}}\biggl( \ket{0}+ [e^{\frac{2\pi i}{2}x_1} + 
+e^{\frac{2\pi i}{2^2}x_2}\;...+...\; e^{\frac{2\pi i}{2^{n-1}}x_{n-1}} + e^{\frac{2\pi i}{2^{n}}x_{n}}]\ket{1}\biggr) \otimes \ket{x_2x_3...x_n}
+\end{gather}
+Now, we can notice the already mentioned \textit{trick} in \autoref{eq:qft_generic_2}. That is, the fact that 
+in binary representation, $x=2^{n-1}x_1+2^{n-2}x_2 + ...+ 2^1x_{n-1} + 2^0x_n$. Thus, the sum expression in the square 
+brackets (factor of $\nicefrac{x_j}{2^j}$) is nothing but $\nicefrac{x}{2^n}$, giving us the state 
+\begin{gather}
+  \frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^n}x}\ket{1}\biggr) \otimes \ket{x_2x_3...x_n}
+  \label{eq:qft_2nd_generic_step}
+\end{gather}
+
+So up to now we performed the following things on the 1-n qubits: Apply the $\mathcal{H}$ followed by $n$ $UROT_k$ operators with 
+the first qubit as the target \textbf{and} the $[\![1,n]\!]$ \footnote{The notation $[\![1,n]\!]$ means a discrete 
+interval. For example, $[\![2,5]\!] \equiv 2,3,4,5$} being the control ones. 
+
+\vspace{-0.2cm}
+The next steps are exactly the same, but now, the 2nd qubit becoms the target and the $[\![2,n]\!]$ become the controls.
+This is performed then for $[\![3,n]\!]$, $[\![4,n]\!]$, etc... It can be easily shown from the \autoref{eq:qft_2nd_generic_step}, that, by applying subsequent 
+operations described above, we will subsequently get 
+\vspace{-0.4cm}
+\begin{gather}
+\frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^n}x}\ket{1}\biggr)\otimes \ket{x_2x_3...x_n} \rightarrow
+\label{eq:qft_first_n_steps}
+\end{gather}
+\vspace{-0.75cm}
+\begin{gather}
+\frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^n}x}\ket{1}\biggr)\otimes \frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^{n-1}}x}\ket{1}\biggr)\otimes \ket{x_3...x_n} \rightarrow ...
+\label{eq:qft_second_n_steps}
+\end{gather}
+\vspace{-0.75cm}
+\begin{gather}
+\frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^n}x}\ket{1}\biggr)\otimes \frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^{n-1}}x}\ket{1}\biggr) \otimes ...\otimes \frac{1}{\sqrt{2}}\biggl( \ket{0}+e^{\frac{2\pi i}{2^0}x}\ket{1}\biggr)
+\label{eq:qft_last_n_steps}
+\end{gather}
+\vspace{-0.4cm}
+
+Let's finally try to implement and comment the QFT circuit and make brief comments on them (I'll write $U_k$ instead of $UROT_k$ for space saving's reasons)
+
+\begin{table}[!hbt]
+  \centering
+\begin{tblr}{c}
+\Qcircuit @C=0.5em @R=0.6em {
+  \lstick{\ket{x_1}}& \qw  & \gate{\mathcal{H}}& \gate{U_2}& \gate{U_3}   &\qw&&& \gate{U_n}      &\qw             &\qw                 & \qw       &\qw       &&\hdots&& &\qw       &&\hdots&\hdots&\hdots&&&\qw & \qw& \qw &\qw& \qw& \qw \\
+  \lstick{\ket{x_2}}& \qw  & \qw               & \ctrl{-1}    & \qw       &\hdots&&& \qw          &\qw             &\gate{\mathcal{H}}  & \gate{U_2}&\gate{U_3}&&\hdots&& &\gate{U_n}&&\hdots&\hdots&\hdots&&&\qw & \qw& \qw &\qw& \qw& \qw \\
+  \lstick{\ket{x_3}}& \qw  & \qw               & \qw          & \ctrl{-2} &\hdots&&& \qw          &\qw             &\qw                 & \ctrl{-1} &\qw       &&\hdots&& &\qw       &&\hdots&\hdots&\hdots&&&\qw & \qw& \qw &\qw& \qw& \qw \\
+  \lstick{\ket{x_4}}& \qw  & \qw               & \qw          & \qw       &      &&& \qw          &\qw             &\qw                 & \qw       &\ctrl{-2} &&\hdots&& &\qw       &&\hdots&\hdots&\hdots&&&\qw & \qw& \qw &\qw& \qw& \qw \\
+  & & \qvdots \\
+  \lstick{\ket{x_{n-1}}}&\qw& \qw              & \qw          &\qw        & \hdots  &&& \qw       &\qw             &\qw                 & \qw       &\qw       &&\hdots&& &\qw       &&\hdots&\hdots&\hdots&&&\qw & \gate{\mathcal{H}}& \gate{U_2} &\qw & \qw & \qw\\
+  \lstick{\ket{x_n}}&\qw   & \qw               & \qw          & \qw       & \hdots  &&& \ctrl{-6} &\qw             &\qw                 & \qw       &\qw       &&\hdots&& &\ctrl{-5} &&\hdots&\hdots&\hdots&&&\qw &\qw                & \ctrl{-1}  &\qw & \gate{\mathcal{H}} &\qw 
+}
+\end{tblr}
+\caption{The QFT algorithm, where successive $UROT_k$ operations are performed. The circuit in fact is composed of 2 types of building blocks. We first chose the target qubit and then 
+apply the $UROT_k$ operation with $k$ being the control qubit of those successive operations. This operation (where the 1 qubit is the target is 
+described in the \autoref{eq:qft_first_n_steps}). Then, we proceed with the second qubit to be the target and we perform the same operation now for the $[\![2,n]\!]$ qubits as control.
+(as per \autoref{eq:qft_second_n_steps}). We proceed then for the rest of the qubits as targets, to finally arrive at the last qubit $n-1$ and $n$. The result of these operations 
+is given in \autoref{eq:qft_last_n_steps}.}
+\label{cirq:qft}
+\end{table}
+
+
+
+
+
+
+
+
+
+

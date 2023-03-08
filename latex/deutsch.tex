@@ -1,0 +1,217 @@
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\section{Deutsch-Jozsa algorithm}
+The Deutsch-Jozsa algorithm was the first algorithm to be proposed.
+The goal of the Deutsch's quantum algorithm is to determine a concrete property of a funciton. In this case, we use the quantum 
+algorithm, to determine the properties of the function. In the case of the 
+\begin{definition}[Constant and balanced]
+  The function used here is a function from $\{0,1\}^N \mapsto \{0,1\}$. The outputs of it can be either constant or balanced.
+  We say that the function is \textit{constant} if for \underline{any} input the output is constant, that is, whether all ones or all zeroes.
+  We say that the function is \textit{balanced} if it outputs ones half of the times and zeroes half of the other times (that is, out of all 
+possible inputs, it will output a \verb|1| in the half of the input cases and \verb|0| in the other).
+\end{definition}
+We will consider the case where $n$ (the number of inputs) is equal to one. That is, the function $f(x)$ has one input bit. $f(x)$, with $x \in \{0,1\}$.
+Let's see an example of a constant or balanced functions. Let $f_1(x)$. The function happens to output the following: $f_1(0)=0$ and $f_1(1)=0$. We see that the 
+function has zeroes for any inputs. Therefore, we can conclude that the function $f_1$ is constant. Consider now the function $f_2$, satisfying the following:
+$f_2(0)=1$ and $f_2(1)=0$. As there are 2 kinds of inputs (\verb|0| and \verb|1|), there are only 2 possible outputs (2 different outputs for 2 different inputs).
+We see that for the function $f_2$, half of the outputs (i.e. only one out of two) is \verb|0| and half of the inputs is \verb|1|. Therefore, the function $f_2$ is 
+balanced.
+
+The example was a simple case, where the input was simply either \verb|0| or \verb|1|. The definition of this constant/balanced can be extended to a more complex case 
+of an input $\{0,1\}^n$, which is the Deutsch-Jozsa algorithm. 
+\subsection*{Deutsch's algorithm}
+Let's first consider the Deutsch's algorithm \cite{noauthor_deutschjozsa_2022}, that is, with one input bit. The circuit is \textit{postulated} to be.
+In order for it to have a working mechanism, we need to prepare the initial states.
+
+
+\begin{figure}[ht!]
+     \begin{subfigure}[b]{0.4\textwidth}
+\Qcircuit @C=1em @R=1em{
+  \qw & \gate{\mathcal{H}} & \ctrl{1} & \gate{\mathcal{H}} & \qw \\
+  \qw & \qw      & \gate{f} & \qw      & \qw \\
+}
+\caption{Deutsch's circuit}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.4\textwidth}
+\hspace{1cm}
+\Qcircuit @C=1em @R=1em{
+  \lstick{\ket{0}}           & \qw & \gate{\mathcal{H}}& \ustick{A}\qw  & \ctrl{1} &\ustick{B}\qw & \gate{\mathcal{H}} & \qw \\
+  \lstick{\ket{0} - \ket{1}} & \qw & \qw     &\ustick{A}\qw   & \gate{f} & \qw          &\qw      & \qw \\
+}
+
+\caption{Initialized states}
+     \end{subfigure}
+  \caption{Deutsch's circuit}
+  \label{cirq:deutsch_start}
+
+\end{figure}
+
+Having the circuit with prepared initial states (\autoref{cirq:deutsch_start}) we're now in the situation in carefully initialize the cirquit. We've identified 2 states of the cirquit: \verb|A| and 
+\verb|B|, which we'll quickly discuss \footnote{The $\ket{0}-\ket{1}$ state can be created using the Hadamard gate applied on the \ket{0} state. TODO}.
+
+The first register begins with the state $\ket{0}$. As usual, applying the Hadamard gate $ \mathcal{H} $ on the first register gives us 
+$\ket{0} \xrightarrow{\mathcal{H}}{} \frac{1}{\sqrt{2}} ( \ket{0} + \ket{1} )$ as usual. Thus, the total state at the point \textbf{A} is given by the tensor product of both registers, which is $(\ket{0}+\ket{1})\otimes (\ket{0} - \ket{1})$.
+
+After the point \texbf{A} we apply the \textsl{function evaluation} (TODO). Let's consider the rigourous operation:
+
+
+\begin{math}
+  \text{\textmd{state at \textbf{A}}:\ \ \ } \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) \\ 
+\end{math}
+
+Now, the state after the function $f$, using the concept of the evaluation function, we have the \textit{general} expression of $\ket{x} \otimes \ket{y} \mapsto \ket{x}\otimes \ket{y \oplus f(x)}$, 
+which, in the case of our circuit \autoref{cirq:deutsch_start}, gives the state $\ket{y}=\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) $ for $\ket{y}$.
+Thus, for the circuit between \textbf{A} and \textbf{B}:
+\begin{align}
+\ket{\psi_B}=\bigg| \frac{1}{\sqrt{2}} (\ket{0}+\ket{1}) \bigg \rangle  &\otimes \bigg| f(x) \oplus \frac{1}{\sqrt{2}} (\ket{0}-\ket{1}) \bigg \rangle \\
+\frac{1}{2} \bigg| \ket{0}+\ket{1} \bigg \rangle  &\otimes \bigg| \ket{f(x)}-\ket{1\oplus f(x)} \bigg \rangle \\
+\frac{1}{2} \bigg| \ket{0}+\ket{1} \bigg \rangle  &\otimes \bigg| (-1)^{f(x)} (\ket{0}-\ket{1}) \bigg \rangle
+\label{eq:deutsch_f(x)}
+\end{align}
+
+Now we can expand this further, still for the state at the point B. When we explicit the expression 
+in order to see the input of the function $f(x)$. What I mean is that in \autoref{eq:deutsch_f(x)}, the function 
+$f(x)$ it accepts the superposition, as the input is an entangled state.
+
+\begin{align}
+\ket{\psi_B} = \frac{1}{2} \bigg| \ket{0}+\ket{1} \bigg \rangle  \otimes \bigg| (-1)^{f(x)} (\ket{0}-\ket{1}) \bigg \rangle \\
+\ket{\psi_B} = \frac{1}{2} \bigg| (-1)^{f(x)}(\ket{0}+\ket{1})\bigg \rangle \otimes \bigg| \ket{0}-\ket{1} \bigg \rangle \\
+\ket{\psi_B} = \frac{1}{2} \bigg| (-1)^{f(0)}\ket{0} + (-1)^{f(1)}\ket{1} \big \rangle \otimes \bigg| \ket{0} - \ket{1} \bigg \rangle
+\end{align}
+now we apply an unusual trick is not that simple to see but simple to check that it is true. What we will use here is the fact that 
+\begin{align}
+  f(0)\oplus f(0) \oplus f(1) = f(1)
+\end{align}
+This can be seen as the term $f(0) \oplus f(0)$ will always give zero and thus, $0 \oplus f(x)=f(x)$ and therefore, 
+
+\begin{align}
+\ket{\psi_B} = \frac{1}{2} \bigg| (-1)^{f(0)}\ket{0} + (-1)^{f(0)\oplus f(0)\oplus f(1)}\ket{1} \bigg \rangle \otimes \bigg| \ket{0} - \ket{1} \bigg \rangle \\
+\ket{\psi_B} = \frac{1}{2} (-1)^{f(0)}\bigg| \ket{0} + (-1)^{f(0)\oplus f(1)}\ket{1} \bigg \rangle \otimes \bigg| \ket{0} - \ket{1} \bigg \rangle
+\label{eq:deutsch_global_phase}
+\end{align}
+We know however that the global phase do not matter at all. In addition to that, we see that in \autoref{cirq:deutsch_start}, after the point \textbf{B},
+we're not interested in the state $\ket{y}$ anymore. Thus, we can simply ignore both the global phase $(-1)^{f(0)}$ and the second state $\ket{0}-\ket{1}$.
+Thus, we're left with the state $\ket{\tilde{\psi_B}}\equiv \ket{0} + (-1)^{f(0)\oplus f(1)}\ket{1}$, on which we apply the $\mathcal{H}$ operation.
+This gives us 
+\begin{align}
+  \mathcal{H} \ket{\tilde{\psi_B}} \stackrel{*}{=} \ket{+} + (-1)^{f(0)\oplus f(1)}\ket{-}=\\
+  (1+(-1)^{f(0)\oplus f(1)}) \ket{0} + (1-(-1)^{f(0)\oplus f(1)})\ket{1}
+  \label{eq:deutsch_f_last}
+\end{align}
+Therefore, we obtain that if ${f(0)\oplus f(1)}=0$, the measurement of the top qubit will be $\ket{0}$ and if the result ${f(0)\oplus f(1)}=1$, the result of the 
+measurement will be given by $\ket{1}$.
+Therefore, we will measure the $\ket{0}$ bit if the value of the function is constant (either all ones or all zeroes), and similarly, we will measure the 
+value $\ket{1}$ bit if the value of the function is balanced. In both cases, we're making the measurements with probability 1.
+
+\subsection*{Deutsch-Jozsa's algorithm}
+The Deutsch-Josza's algorithm is similar to the Deutsch's one. That is, it is a generalization from one bit input ( i.e. $\{0,1\}$) 
+to the n bit input (i.e. $\{0,1\}^n$, which is nothing but a bit string).
+
+\begin{table}[!hbt]
+  \centering
+\begin{tblr}{l || r}
+\Qcircuit @C=1em @R=1em{
+  \lstick{\ket{0}}&\qw  & \ustick{A}\qw & \gate{\mathcal{H}} & \ustick{B} \qw & \ctrl{1} & \ustick{C} \qw & \gate{\mathcal{H}}& \ustick{D}\qw \\
+  \lstick{\ket{0}}&\qw  & \qw & \gate{\mathcal{H}} & \qw & \ctrl{1} & \qw & \gate{\mathcal{H}}& \qw \\
+  \lstick{\ket{0}}&\qw  & \qw & \gate{\mathcal{H}} & \qw & \qw & \qw & \gate{\mathcal{H}}& \qw \\
+  \lstick{\ket{0}}&\qw  & \qw & \qvdots & & \qvdots & & \qvdots & \\
+  \lstick{\ket{0}}&\qw  & \qw & \gate{\mathcal{H}} & \qw & \ctrl{1} & \qw & \gate{\mathcal{H}}& \qw \\
+  \lstick{\ket{0}}&\qw  & \qw & \gate{\mathcal{H}} & \qw & \ctrl{1} & \qw & \gate{\mathcal{H}}& \qw \\
+  \lstick{\ket{0}-\ket{1}}&\qw & \qw & \qw & \qw & \gate{f} & \qw & \qw & \qw \\
+  %\qw & \gate{\mathcal{H}} & \ctrl{1} & \gate{\mathcal{H}} & \qw \\
+  %\qw & \qw      & \gate{f} & \qw      & \qw \\
+}\hspace{1cm}&
+\SetCell[r=9]{} 
+\hspace{2cm}
+\Qcircuit @C=1em @R=1.5em{
+  \lstick{\ket{0}^{\otimes n}} \qw & \ustick{A}\qw & \gate{\Huge\mathcal{H}^{\otimes n}} & \ustick{B} \qw & \ctrl{1} & \ustick{C} \qw & \gate{\Huge\mathcal{H}^{\otimes n}} & \ustick{D}\qw \\
+  \lstick{\ket{0}-\ket{1}} & \qw & \qw & \qw & \gate{f} & \qw & \qw & \qw \\
+}
+
+\\
+
+\end{tblr}
+\caption{The table illustrates 2 schematic circuits for the Deutsch-Josza algorithm. 
+Both of them are equivalent. We prefer the second one (the right one) as it is simply shorter.}
+\label{table:cirq:deutsch_josza}
+\end{table}
+
+
+
+
+The working principle of this generalized version is harder to show and harder to understand. The proof is nicely shown in \cite{noauthor_deutschjozsa_2022}.
+Lets start from the initial state, as shown in \autoref{table:cirq:deutsch_josza}. As usual, we sometimes omit the global normalization constant 
+(we thus write $\stackrel{*}{=}$).
+\begin{align}
+  \ket{\psi_A}\stackrel{*}{=}& (\ket{0}\otimes \ket{0} ... \otimes \ket{0})\otimes (\ket{0}-\ket{1}) = \ket{0}^{\otimes n}\otimes (\ket{0}-\ket{1})\\
+  \ket{\psi_B}\stackrel{*}{=}& \bigotimes_{i=0}^{n} \mathcal{H} \ket{\psi_A} \stackrel{*}{=} \mathcal{H}^{\otimes n}\ket{0}^{\otimes n}\otimes (\ket{0}-\ket{1})\\
+  \stackrel{*}{=}& \ket{+}^{\otimes n} (\ket{0}+\ket{1}) = \sum_{x}^{2^n} \ket{x}\otimes (\ket{0}-\ket{1})
+\end{align}
+Note that $\ket{x}$ here represents a binary string. Indeed, a $\mathcal{H}$ acting on $\ket{0}$ can represent the sum of numbers from 0 to 1. 
+($\mathcal{H}\ket{x}\stackrel{*}{=}\ket{0}+\ket{1}$). When acting on a 2D space, 
+$(\mathcal{H}\otimes \mathcal{H})(\ket{0}\otimes \ket{0})\stackrel{*}{=}\ket{0}\otimes \ket{0} + \ket{0}\otimes \ket{1} + \ket{1}\otimes \ket{0} + \ket{1}\otimes \ket{1}$.
+We therefore see that the Hadamard gate on the n-dimensional space will give the sum of binary strings ranging from $0$ to $2^n-1$. This is what is meant 
+in the sum over $\ket{x}$.
+Then, the quantum function evaluation, as defined, will create the transformation $\ket{x}\otimes \ket{y} \xrightarrow{f}{} \ket{x}\otimes \ket{f(x)\oplus y}$,
+by definition.
+Therefore, at the point $C$ (as on \autoref{table:cirq:deutsch_josza}), the transformation give:
+\begin{align}
+  \ket{\psi_C} &\xleftarrow{f}{} \ket{\psi_B} \\
+  \ket{\psi_C} &\stackrel{*}{=} \sum_x^{2^n-1} \ket{x}(\ket{f\oplus 0}-\ket{f \oplus 1}) \\
+               &= \sum_x^{2^n-1} \ket{x}(-1)^{f(x)} (\ket{0}-\ket{1})
+\label{eq:deutsch_josza_C}
+\end{align}
+now, we can "ignore" the $\ket{0}-\ket{1}$ part, as after the C point, we're only applying the $\mathcal{H}$ to the top part (i.e. without the 
+$\ket{0}-\ket{1}$). We also remember our important result 
+\begin{align}
+  \matchcal{H} \ket{x} \equiv \bigotimes^n \mathcal{H} \ket{x} = \frac{1}{\sqrt{2^n}} \sum_{y=0}^{2^n-1} (-1)^{x\cdot y}\ket{y}
+  \label{eq:hadamard_on_generic}
+\end{align}
+with the $x \cdot y$ being the vector product between two bitstrings. The bitstrings can be represented as vectors, e.g. $\ket{x}\equiv (0,1,1,0,0,...,1)$ and 
+$\ket{y}\equiv (1,0,1,1,...,1)$. Their dot product is defined as $x\cdot y = (x_1 \cdot y_1) \oplus (x_2 \cdot y_2) \oplus (x_3 \cdot x_3) \oplus ... \oplus (x_n \cdot x_n)$.
+Therefore, by applying the $\mathcal{H}$ on $\ket{\psi_C}$ given in \autoref{eq:deutsch_josza_C},
+\begin{align}
+  \bigotimes ^n \mathcal{H} \ket{\psi_C} &\stackrel{*}{=} \mathcal{H} \sum_x^{2^n-1} \ket{x}(-1)^{f(x)} \\
+                                         &= \sum_x^{2^n-1} \mathcal{H}\ket{x}(-1)^{f(x)} \stackrel{\text{\autoref{eq:hadamard_on_generic}}}{=} \\
+                                         &= \sum_x^{2^n-1} \sum_y^{2^n-1} \ket{y} (-1)^{f(x)}(-1)^{x\cdot y} \\
+                                         &= \sum_y^{2^n-1} \Biggl [\; \; \sum_x^{2^n-1} (-1)^{f(x)}(-1)^{x\cdot y} \; \Biggl ] \ket{y}
+\end{align}
+which is the (almost) final result. This is what we get, when we'll obtain after applying the $\mathcal{H}$ on the $\ket{\psi_C}$ state.
+Now, we can see that the $\ket{y}$ are linear combinations of probability amplitudes $\sum_x^{2^n-1} (-1)^{f(x)}(-1)^{x\cdot y}$ for each 
+$\ket{y}$. We now have a look at the state $\ket{y}=0$, that is, $\ket{y}=\ket{0,0,...,0}$. The probability of measuring it 
+is given by $\bigg| \sum_x^{2^n-1} (-1)^{f(x)} \bigg|^2$. The probability of measuring this $\ket{0}=\ket{y}$ will be given by 1, if the function is constant.
+Indeed, if $f(x)$ is constant (either always ones or always zeroes), then we will make the sum of $-1$ if it is always one, and sum of all $(-1)^0$ if always 
+zeroes. If it is balanced, then we will make the sum of $(-1)$ and $1$, which will give us 0 probability if the function is balanced.
+
+Thus, we've showed that the algorithm can determine, whether the function is constant or balanced.
+
+\subsubsection*{Example}
+
+The "problem" with this algorithm is that we need to have a very specific oracle. To be more precise, one may thing that we constructed the concept of 
+solving the algorithm, based on the given oracle that "comes from nowhere". This is not false. For an arbitrary function, we can't construct the algorithm right 
+away.
+
+
+In order to ckeck the algorithm, one can simply check the algorithm for specific inputs, and whether it represents the specific outputs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
