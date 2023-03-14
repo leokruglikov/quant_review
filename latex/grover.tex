@@ -1,0 +1,163 @@
+\section*{Grover's algorithm}
+The Grover's algorithm is the first algorithm to mention when discussing sorting. 
+The Grover's algorithm is a sorting algorithm that uses a quantum oracle.
+We recall that the quantum oracle is a certain function/operator that we consider 
+to exist.
+In the case of the Grover's algorithm, one defines the Grover's oracle:
+\begin{equation}
+  U_\omega (x) = 
+  \begin{cases}
+    \ket{x} \text{ if } x \neq \omega\\
+    -\ket{x} \text{ if } x = \omega
+  \end{cases}
+  \label{eq:first_grovers_oracle}
+\end{equation}
+
+We remeber that an oracle is a function that is able to verify some kind of solution.
+From the \autoref{eq:first_grovers_oracle}, one can say that the oracle operator corresponds 
+to the function
+\begin{equation}
+  U_\omega\ket{x} = (-1)^{f(x)}\ket{x}, \;\; \text{ with } 
+  f(x) = \begin{cases}
+    0 \text{ if } x \neq \omega \\
+    1 \text{ if } x = \omega
+  \end{cases}
+  \label{eq:grovers_algorithm}
+\end{equation}
+
+Next, one defines the so-called \textsl{Grover's diffusion operator}, sometimes referred to as the 
+phase amplification operator. It is defined as 
+\begin{gather}
+  U_s = 2\ket{s}\bra{s} - \mathbbm{1}
+  \label{eq:grovers_diffusion}
+\end{gather}
+, where $\ket{s}$ is a superposition that will be defined further.
+
+So now, let's consider the circuit itself. We will try to give the mathematical proof of it based on the circuit itself.
+
+\begin{table}[ht!]
+  \centering
+  \begin{tblr}{c}
+    \Qcircuit @C=1.2em @R=1.15em{
+      \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} &\multigate{4}{U_\omega}&\gate{\mathcal{H}}& \multigate{4}{U_s}&\gate{\mathcal{H}}& \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
+    \vdots           &   &                    & \ghost{U_\omega}        &                  & \ghost{U_s}         &\vdots            &      & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw 
+    }
+  \end{tblr}
+  \caption{The basic Grover's algorithm step. In order to get better results, i.e. to emphasize the element $\ket{\omega}$ that we're looking for, we would 
+  perform multiple of these Grover's steps.}
+\end{table}
+
+Lets now try to brake down the steps of the algorihtm. As usual, we're preparing the the initial state in the form $\ket{0}^{\otimes n}$. 
+The application of the $\mathcal{H}^{\otimes n}$ gives the state $\ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} \ket{x}$.
+Now it's time to apply the Grover's operator. The Grover's operator (as defined in \autoref{eq:grovers_algorithm}) will act on the state $\ket{s}$.
+
+\begin{gather}
+  U_\omega \ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} (-1)^{f(x)}\ket{x} = \frac{1}{\sqrt{N}}\biggl(\sum_{x=0}^{\omega - 1} \ket{x}  
+  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr) \equiv \frac{1}{\sqrt{N}}\ket{\phi}
+  \label{eq:grovers_application}
+\end{gather}
+
+Now it is time to apply the Grover's diffusion operator on the previously obtained state denoted as $\ket{\phi}$.
+The diffusion operator is defined in \autoref{eq:grovers_diffusion}. We recall that the state $\ket{s}$ is defined as 
+$\ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} \ket{x}$.
+The operator is therefore, 
+%\begin{equation}
+%  \begin{split}
+%    U_s \ket{\phi} = 2\ket{s}\bra{s} \ket{\phi} - \mathbbm{1}\ket{\phi} \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
+%    2 \frac{1}{N}\Biggl[ \biggl( \sum_{x=0}^{N-1} (-1)^{f(x)}\ket{x}  \biggr)\cdot \biggl( \sum_{x=0}^{N-1} (-1)^{f(x)}\bra{x}  \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
+%    2 \frac{1}{N}\Biggl[ \biggl( \sum_{x=0}^{\omega - 1} \ket{x}  
+%  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr)\cdot \biggl( \sum_{x=0}^{\omega - 1} \bra{x}  
+%  + \sum_{x=\omega+1}^{N-1} \bra{x} \; \; - \bra{\omega} \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
+%    2 \frac{1}{N}\Biggl[ \biggl( \sum_{x=0}^{\omega - 1} \ket{x}  
+%        + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr)\cdot \biggl( \sum_{x=0}^{\omega - 1} \bra{x}\ket{\phi}  
+%    + \sum_{x=\omega+1}^{N-1} \bra{x}\ket{\phi} \; \; - \bra{\omega}\ket{\phi} \biggr) - \ket{\phi }\Biggr]  
+%  \end{split}
+%  \label{eq:grovers_apply_diffusion}
+%\end{equation}
+
+\begin{equation}
+  \begin{split}
+    U_s \frac{1}{\sqrt{N}}\ket{\phi} = 2\ket{s}\bra{s} \ket{\phi} - \mathbbm{1}\ket{\phi} \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
+    \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2\biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x}  \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
+    \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2\biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
+    \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2 \biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\ket{\phi} - \ket{\phi }\Biggr]  
+  \end{split}
+  \label{eq:grovers_apply_diffusion}
+\end{equation}
+Let's try to break down the individual components.
+The term we want to break down is 
+\begin{gather}
+  \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\ket{\phi} = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1}(-1)^{f(x)}\ket{x} \biggr) = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{y=0}^{N-1}(-1)^{f(y)}\ket{y} \biggr)
+\end{gather}
+
+%\begin{gather}
+%  \bra{\omega}\ket{\phi} = \bra{\omega}\biggl(\sum_{x=0}^{\omega - 1} \ket{x}  
+%  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr) \stackrel{\bra{a}\ket{b} = \delta_{a,b}}{=} 0 + 0 - \bra{\omega}\ket{\omega} = -1
+%\end{gather}
+%We're now left with 2 more terms: $\sum_{x=0}^{\omega - 1} \bra{x}\ket{\phi}$ and $\sum_{x=\omega+1}^{N-1} \bra{x}\ket{\phi}$. We remember that 
+%
+%
+%\begin{gather}
+%\ket{\phi} = \sum_{x=0}^{N-1} (-1)^{f(x)}\ket{x} =  \sum_{x=0}^{\omega - 1} \ket{x} + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega}
+%\end{gather}
+%Thus the term $\sum_{x=0}^{\omega - 1} \bra{x}\ket{\phi}$ 
+%\begin{equation}
+%\begin{split}
+%  \biggl\langle \sum_{x=0}^{\omega -1}\bra{x} \bigg | \sum_{x=0}^{\omega - 1} \ket{x} + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggl\rangle = \\
+%    \biggl\langle \sum_{x=0}^{\omega -1}\bra{x} \bigg| \sum_{x=0}^{\omega - 1} \ket{x} \biggr\rangle + \biggl\langle \sum_{x=0}^{\omega -1} \bra{x} \bigg|\sum_{x=\omega+1}^{N-1} \ket{x} \biggr\rangle 
+%    - \biggl\langle \sum_{x=0}^{\omega -1} \bra{x} \bigg| \ket{\omega} \biggr\rangle
+%\end{split}
+%\end{equation}
+%The orthogonality gives that the only non-zero term is $\biggl\langle \sum_{x=0}^{\omega -1}\bra{x} \bigg| \sum_{x=0}^{\omega - 1} \ket{x} \biggr\rangle$. In total, 
+%there will be $\omega$ ones. Therefore, this scalar product is simply $\omega$. 
+%
+%
+%The next term is, as said, $\sum_{x=\omega+1}^{N-1} \bra{x}\ket{\phi}$:
+%\begin{equation}
+%  \begin{split}
+%  \biggl\langle \sum_{x=\omega+1}^{N-1}\bra{x} \bigg | \sum_{x=0}^{\omega - 1} \ket{x} + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggl\rangle = \\
+%    \biggl\langle \sum_{x=\omega+1}^{N-1}\bra{x} \bigg| \sum_{x=0}^{\omega - 1} \ket{x} \biggr\rangle + \biggl\langle \sum_{x=0}^{\omega -1} \bra{x} \bigg|\sum_{x=\omega+1}^{N-1} \ket{x} \biggr\rangle 
+%    - \biggl\langle \sum_{x=\omega + 1}^{N-1} \bra{x} \bigg| \ket{\omega} \biggr\rangle
+%  \end{split}
+%\end{equation}
+%Similarly, as with the previous term, the result will be given instead by $N-1-\omega$, as we're summing from $\omega+1$ to $N-1$.
+%Therefore, with all these results, one combines to the \autoref{eq:grovers_apply_diffusion}.
+%
+%\begin{equation}
+%  \begin{split}
+%     \frac{1}{N}\Biggl[2 \biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot \biggl( \sum_{x=0}^{\omega - 1} \bra{x}\ket{\phi}  
+%    + \sum_{x=\omega+1}^{N-1} \bra{x}\ket{\phi} \; \; - \bra{\omega}\ket{\phi} \biggr) - \ket{\phi }\Biggr]  = \\
+%     \frac{1}{N}\Biggl[2 \biggl(\sum_{x=0}^{N-1}\ket{x} \biggr)\cdot( \omega+(N-1-\omega) + 1) - \ket{\phi }\Biggr]  = 
+%     \frac{1}{N}\Biggl[2 \biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot(N) - \ket{\phi }\Biggr]  
+%  \end{split}
+%\end{equation}
+%
+%We can finally develop further the last equality
+%\begin{equation}
+%  \begin{split}
+%     \frac{1}{N}\Biggl[2 \biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot(N) - \ket{\phi }\Biggr] = 2 \sum_{x=0}^{N-1}\ket{x} - \frac{1}{N}\ket{\phi}
+%  \end{split}
+%\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

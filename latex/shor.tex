@@ -1,0 +1,136 @@
+\section{Shor's algorithm}
+The Shor's algorithm is one of the most famous algorithms in quantum computing.
+It has the potential ability to factor integers with polynomial time. The process of integer factoring 
+is very important in computer security, that is, in cryptography. We will however not go into 
+great details into the deep mathematics behind cryptography, but only what it is necessary for 
+the understanding of the algorithm.
+
+To consider the Shor's algorihtm, we define the function that is working with natural numbers
+and with modular arithmetic \footnote{Without going into detail of modular arithmetic, let's give 
+some examples, that will help us to understand it. $44 \stackrel{\text{mod }7}{\equiv} 2$, as $44=6\cdot7 + 2$. 
+$34 \stackrel{\text{ mod }9} = 7$, as $34 = 3\cdot 9 + 7$. So this is the number that must be added to the maximum 
+number of times that the first number will go into second (e.g. 7 or 9 will go into 44 or 34 respectively).}. 
+We define therefore 
+the function 
+\begin{gather}
+  f(x) = a^{x} \text{ mod } N \\
+  f(x) \stackrel{\text{ mod } N}{\equiv} a^x
+\end{gather}
+
+We note that this function is clearly periodic. 
+In addition to that, one also defines the notion of \textsl{period} for such function, denoting 
+$t$ or $r$ \cite{noauthor_shors_nodate}, which is the smallest number $t$ such that 
+\begin{gather}
+  f(x=t) = a^t \text{ mod } N = 1 \\
+  f(x=t) = 1 \stackrel{\text{mod } N} = a^t
+\end{gather}
+
+
+Now, we get to the quantum mechanical description of this algorithm. One defines as usual the (unitary) operator $U$:
+\begin{gather}
+  U\ket{y} = \ket{ay \text{ mod } N}
+\end{gather}
+
+Let's check how this operator acts sequentially for the example of $a=5$ and N=28...
+
+\begin{equation}
+\begin{split}
+  U\ket{1}=\ket{5} \\
+  U^2\ket{1} = U\ket{5} = \ket{5\cdot 5 \text{ mod } 28} = \ket{3} \\
+  U^3\ket{1} = U\ket{3} = \ket{5\cdot 3 \text{ mod } 28} = \ket{13} \\
+  U^4\ket{1} = U\ket{13} = \ket{5\cdot 13 \text{ mod } 28} = \ket{9} \\
+  U^5\ket{1} = U\ket{9} = \ket{5\cdot 9 \text{ mod } 28} = \ket{17} \\
+  U^6\ket{1} = U\ket{17} = \ket{5\cdot 17 \text{ mod } 28} = \ket{1} 
+\end{split}
+\end{equation}
+
+We thus again came back to the state $\ket{1}$. This means that for the case of 
+these numbers (i.e. $a=5$ and $N=28$), the period of the function is $6$. That is, 
+$5^6 \stackrel{\text{ mod } 28}{\equiv} 1$.
+
+In a similar fashion, one can define a vector, having an interesting property. 
+Namely, being the eigenvector of this operator. The eigenvector 
+is in fact the superposition of the aformentioned vectors. 
+The superposition is given by 
+\begin{gather}
+  \ket{u} = \sum_{k=0}^{r-1} \ket{a^k\text{ mod }N}
+\end{gather}
+
+In the specific case of $a=5$ and $N=28$, we have that 
+\begin{gather}
+  \ket{u} = \frac{1}{4}\biggl(\ket{1} + \ket{13} + \ket{9} + \ket{17} \biggr)
+\end{gather}
+
+It is indeed an eigenket:
+\begin{equation}
+\begin{split}
+  U\ket{u} = U\frac{1}{4}\biggl(\ket{1} + \ket{13} + \ket{9} + \ket{17}\biggl) = \\
+    \frac{1}{4} \biggl(U\ket{1} + U\ket{13} + U\ket{9} + U\ket{17}\biggl) = \\
+      \frac{1}{4} \biggl(\ket{13} + \ket{9} + \ket{17} + \ket{1}\biggl) = \\
+        \frac{1}{4}\biggl(\ket{1} + \ket{13} + \ket{9} + \ket{17}\biggl) = \ket{u}
+\end{split}
+\end{equation}
+
+We can show it for a general case for the $\ket{u} = \sum_{k=0}^{r-1} \ket{a^k \text{ mod } N}$. 
+The main property of some state $\ket{a^{r-1} \text{ mod }}$ is 
+$U\ket{a^{r-1} \text{ mod }} = \ket{a^{r} \text{ mod }} = \ket{1}$.
+
+So we show that this is indeed the eigenket of the operator: 
+\begin{equation}
+  \begin{split}
+    U\ket{u} = U\sum_{k=0}^{r-1} \ket{a^k \text{ mod } N} = \sum_{k=0}^{r-1} \ket{a^{k+1} \text{ mod } N} = \\
+    = \sum_{k'=1}^{r-1} \ket{a^k \text{ mod } N} + \ket{a^{r = (k+1)} \text{ mod } N} = \\ 
+    \sum_{k'=1}^{r-1} \ket{a^k \text{ mod } N} + 
+    \ket{a^{0(=k)} \text{ mod } N} = \sum_{k=0}^{r-1} \ket{a^k \text{ mod }N} 
+  \end{split}
+  \label{eq:shors_eigenvec_proof_1}
+\end{equation}
+
+We can now consider another state: 
+\begin{gather}
+  \ket{u_1} = \sum_{k=0}^{r-1}e^{-\frac{2\pi ik}{r}} \ket{a^k \text{ mod } N}
+  \label{eq:shors_eigenvec}
+\end{gather}
+
+In fact, it is also an eigenstate of the operator $U$.
+One can show that the vector in \autoref{eq:shors_eigenvec} is also an eigenket of the operator $U$. 
+
+\begin{equation}
+  \begin{split}
+    U \sum_{k=0}^{r-1} e^{-\frac{2\pi ik}{r}} \ket{a^k\text{ mod } N} = \sum_{k=0}^{r-1} e^{-\frac{2\pi ik}{r}} \ket{a^{k+1}\text{ mod } N} = \\
+    = e^{\frac{2\pi i}{r}} \sum_{k=0}^{r-1} e^{-\frac{2\pi i(k+1)}{r}} \ket{a^{k+1}\text{ mod }N}
+  \end{split}
+\end{equation}
+We now do the similar trick as for \autoref{eq:shors_eigenvec_proof_1}. To obtain 
+\begin{equation}
+  \begin{split}
+    e^{\frac{2\pi i}{r}} \sum_{k=0}^{r-1} e^{-\frac{2\pi i(k+1)}{r}} \ket{a^{k+1}\text{ mod }N} = 
+    e^{\frac{2\pi i}{r}} \sum_{k=0}^{r-1} e^{-\frac{2\pi ik}{r}} \ket{a^k\text{ mod } N} \\
+  \end{split}
+\end{equation}
+
+In fact, in the general case, one can write the following:
+\begin{gather}
+  U \sum_{k=0}^{r-1}e^{-\frac{2\pi i sk}{r}}\ket{a^k \text{ mod }N} \equiv U\ket{u_s} = e^{\frac{2\pi is}{r}}\ket{u_s}
+\end{gather}
+The idea here is that the state $\ket{u_s}$ is an eigenvector of the operator $U$ and its eigenvalue is given by $e^{\frac{2\pi is}{r}}$.
+Therefore, one can remember the fact that in \autoref{subsec:phase_estim}, we were estimating the phase of the eigenvalue 
+of the operator $U$. In this case, the phase $\theta$ is given by $\theta = \frac{s}{r}$. Therefore, one can estimate the phase, thus obtain 
+the so-wanted period $r$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,13 +37,50 @@
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \addbibresource{./q.bib}
+\numberwithin{equation}{section}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 
 
-\title{Basic review of basic quantum computing algorithms}
 \begin{document}
-\maketitle
 
+
+ \begin{center}
+
+\hspace{5cm}
+   \vspace{5cm}
+
+ \Huge{Notes on basic notions of basic Quantum algorithms} 
+ \vspace{1cm}
+\\ \huge A mathematical perspective\\ 
+
+\hspace{10pt}
+
+% Author names and affiliations
+\large
+Leo Kruglikov
+\vspace{0.5cm}
+
+
+\today
+
+\hspace{10pt}
+
+%\small  
+%$^1$) First affiliation\\
+%arthur.author@correspondence.email.com\\
+%$^2$) Second affiliation
+
+\end{center}
+
+\hspace{10pt}
+
+\normalsize
+
+%This is a simple one-page abstract template. Please keep your abstract length at one page. The abstract should be in English. You may include figures and pictures in your abstract, as long as they fit in the single page limit.
+
+%Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusant
 \newcommand{\qvdots}{% \vdots for qcircuit
   \raisebox{0.3em}{\ensuremath{\vdots}}%
 }
@@ -57,6 +94,8 @@
 \include{./simons.tex}
 \include{./fourier.tex}
 \include{./phase_estim.tex}
+\include{./shor.tex}
+\include{./grover.tex}
 
 
 \newpage

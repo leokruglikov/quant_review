@@ -273,6 +273,27 @@
     \field{urlyear}{2023}
   \endentry
 
+  \entry{noauthor_shors_nodate}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{abstract}{%
+    A university quantum algorithms/computation course supplement based on
+  Qiskit%
+    }
+    \field{title}{Shor's Algorithm}
+    \verb{url}
+    \verb https://community.qiskit.org/textbook/ch-algorithms/shor.html
+    \endverb
+    \field{langid}{english}
+    \verb{file}
+    \verb Snapshot:/home/leo/Zotero/storage/M2FDG4PN/shor.html:text/html
+    \endverb
+    \field{urlday}{09}
+    \field{urlmonth}{03}
+    \field{urlyear}{2023}
+  \endentry
+
   \entry{noauthor_simons_2023}{inreference}{}
     \field{labeltitlesource}{title}
     \field{sortinit}{S}

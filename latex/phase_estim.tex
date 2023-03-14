@@ -1,4 +1,5 @@
 \subsection*{Phase estimation}
+\label{subsec:phase_estim}
 
 The phase estimation is an important algorithm, that does what its name suggests - to 
 estimate the phase of a system. That it, suppose there exists a state $\ket{\psi}$. Suppose then 
@@ -84,7 +85,8 @@ So we have that the state that the $\mathcal{F}^{-1}$ must be applied to is give
 
 Let's now try to apply the inverse Fourier in it: 
 
-\begin{gather}
+\begin{equation}
+\begin{split}
   \widehat{\mathcal{F}^{-1}} = \frac{1}{2^{\frac{n}{2}}} \biggl[ \sum_{y=0}^{2^n-1} e^{2\pi i y \theta} \ket{y} \biggr]  = \\
   \frac{1}{2^n}\sum_{x=0}^{2^n-1}\sum_{k=0} e^{-\frac{2\pi ixk}{2^n}}\ket{k}\bra{x} \biggl[ \sum_{y=0}^{2^n-1} e^{2\pi i y \theta} \ket{y} \biggr] = \\
   \frac{1}{2^n} \sum_{y=0}^{2^n-1} \sum_{x=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-\frac{2\pi ixk}{2^n}} e^{2\pi i y \theta} \ket{k}\bra{x} \ket{y} \stackrel{\bra{x}\ket{y}=\delta_{xy}}= \\
@@ -92,7 +94,9 @@ Let's now try to apply the inverse Fourier in it:
   \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-\frac{2\pi iyk}{2^n}} e^{2\pi i y \theta} \ket{k} = 
   \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{-2\pi iy(\frac{k}{2^n}- \theta)} \ket{k} = \\
   = \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{\frac{-2\pi iy}{2^n}(k - \theta 2^n)} \ket{k}
-\end{gather}
+\end{split}
+\end{equation}
+
 Which is the last state after the inverse Fourier transofrm. To be more precise, 
 \begin{gather}
   \frac{1}{2^n} \sum_{y=0}^{2^n-1}\sum_{k=0}^{2^n-1} e^{\frac{-2\pi iy}{2^n}(k - \theta 2^n)} \ket{k} \otimes \ket{\psi}

@@ -8,6 +8,8 @@ A level-1 auxiliary file: ./bern_vazirani.aux
 A level-1 auxiliary file: ./simons.aux
 A level-1 auxiliary file: ./fourier.aux
 A level-1 auxiliary file: ./phase_estim.aux
+A level-1 auxiliary file: ./shor.aux
+A level-1 auxiliary file: ./grover.aux
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
@@ -28,44 +30,44 @@ Database file #2: ./q.bib
 Biblatex version: 3.18
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 9 entries,
+You've used 10 entries,
             6399 wiz_defined-function locations,
-            1266 strings with 18175 characters,
-and the built_in function-call counts, 47986 in all, are:
-= -- 1295
-> -- 4985
-< -- 401
-+ -- 4502
-- -- 4319
-* -- 1925
-:= -- 6282
+            1273 strings with 18367 characters,
+and the built_in function-call counts, 51157 in all, are:
+= -- 1352
+> -- 5252
+< -- 431
++ -- 4743
+- -- 4555
+* -- 2050
+:= -- 6586
 add.period$ -- 0
-call.type$ -- 9
-change.case$ -- 41
-chr.to.int$ -- 474
-cite$ -- 16
-duplicate$ -- 3590
-empty$ -- 3718
+call.type$ -- 10
+change.case$ -- 45
+chr.to.int$ -- 498
+cite$ -- 18
+duplicate$ -- 3902
+empty$ -- 4045
 format.name$ -- 47
-if$ -- 6578
+if$ -- 7071
 int.to.chr$ -- 0
-int.to.str$ -- 9
+int.to.str$ -- 10
 missing$ -- 0
-newline$ -- 229
+newline$ -- 249
 num.names$ -- 41
-pop$ -- 2542
+pop$ -- 2855
 preamble$ -- 1
-purify$ -- 36
+purify$ -- 39
 quote$ -- 0
-skip$ -- 1095
+skip$ -- 1184
 stack$ -- 0
-substring$ -- 3157
-swap$ -- 1377
-text.length$ -- 323
-text.prefix$ -- 8
+substring$ -- 3255
+swap$ -- 1501
+text.length$ -- 347
+text.prefix$ -- 9
 top$ -- 1
-type$ -- 294
+type$ -- 328
 warning$ -- 0
-while$ -- 470
+while$ -- 492
 width$ -- 0
-write$ -- 221
+write$ -- 240
