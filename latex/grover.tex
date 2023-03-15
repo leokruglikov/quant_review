@@ -33,22 +33,52 @@ phase amplification operator. It is defined as
 \end{gather}
 , where $\ket{s}$ is a superposition that will be defined further.
 
+We also define the operator $\widetilde{U}_s$ to simplyfy notation:
+\begin{gather}
+\widetilde{U}_s = 2\ket{0}^{\otimes n}\bra{0}^{\otimes n} - \mathbbm{1}
+\end{gather}
+
 So now, let's consider the circuit itself. We will try to give the mathematical proof of it based on the circuit itself.
 
-\begin{table}[ht!]
+\begin{table}[hbt!]
   \centering
-  \begin{tblr}{c}
-    \Qcircuit @C=1.2em @R=1.15em{
-      \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} &\multigate{4}{U_\omega}&\gate{\mathcal{H}}& \multigate{4}{U_s}&\gate{\mathcal{H}}& \qw  & \qw   \\
-    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
-    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
-    \vdots           &   &                    & \ghost{U_\omega}        &                  & \ghost{U_s}         &\vdots            &      & \qw   \\
-    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{U_s}         &\gate{\mathcal{H}}& \qw  & \qw 
+  \begin{tblr}{l|r}
+    \hspace{-0.2cm}
+    \Qcircuit @C=1em @R=1.15em{
+      \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} &\multigate{4}{U_\omega}&\gate{\mathcal{H}}& \multigate{4}{\widetilde{U}_s}&\gate{\mathcal{H}}& \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{\widetilde{U}_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{\widetilde{U}_s}         &\gate{\mathcal{H}}& \qw  & \qw   \\
+    \vdots           &   &                    & \ghost{U_\omega}        &                  & \ghost{\widetilde{U}_s}         &\vdots            &      & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        &\gate{\mathcal{H}}& \ghost{\widetilde{U}_s}         &\gate{\mathcal{H}}& \qw  & \qw 
     }
+    &\hspace{1.9cm} 
+    \Qcircuit @C=1em @R=1.15em{
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} &\multigate{4}{U_\omega}  & \multigate{4}{U_s}  & \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        & \ghost{U_s}         & \qw  & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        & \ghost{U_s}         & \qw  & \qw   \\
+    \vdots           &   &                    & \ghost{U_\omega}        & \ghost{U_s}         &      & \qw   \\
+    \lstick{\ket{0}}&\qw & \gate{\mathcal{H}} & \ghost{U_\omega}        & \ghost{U_s}         & \qw  & \qw 
+    }
+
   \end{tblr}
   \caption{The basic Grover's algorithm step. In order to get better results, i.e. to emphasize the element $\ket{\omega}$ that we're looking for, we would 
-  perform multiple of these Grover's steps.}
+  perform multiple of these Grover's steps. Note that there are 2 equivalent cirquits.}
+  \label{cirq:grovers_cirq}
 \end{table}
+
+On \autoref{cirq:grovers_cirq}, there are 2 fully equivalent circuits. Namely, in the right circuit, the operator 
+$\widetilde{U_s}= 2\ket{0}^{\otimes n}\bra{0}^{\otimes n} -\mathbbm{1}$. If we apply to some arbitrary state $\ket{\psi}$ first the Hadamard then the 
+$U_s$ then the Hadamard again, we get (we remember that an operator is applied to the right):
+
+\begin{equation}
+  \begin{split}
+    \ket{\psi}\xrightarrow{\mathcal{H}} \mathcal{H}\ket{\psi} \xrightarrow{U_s} \biggl[2\ket{0}^{\otimes n}\bra{0}^{\otimes n} -\mathbbm{1}\biggr] \mathcal{H}\ket{\psi} = \\
+    \biggl[2\ket{0}^{\otimes n}\bra{0}^{\otimes n}\mathcal{H} - \mathcal{H}\biggr] \ket{\psi} \stackrel{\mathcal{H}\ket{0}^{\otimes n}=\ket{s}}{=} \\
+    \biggl[2\ket{0}^{\otimes n}\bra{s} - \mathcal{H}\biggr] \ket{\psi} \xrightarrow{\mathcal{H}\text{ again }} \\
+    \mathcal{H} \biggl[2\ket{0}^{\otimes n}\bra{s} - \mathcal{H}\biggr] = \biggl[2\mathcal{H}\ket{0}^{\otimes n}\bra{s} - \mathcal{H}\mathcal{H}\biggr] \stackrel{\mathcal{H}^2=\mathbbm{1}}{=}
+    2\ket{s}\bra{s}-\mathbbm{1}
+\end{split}
+\end{equation}
 
 Lets now try to brake down the steps of the algorihtm. As usual, we're preparing the the initial state in the form $\ket{0}^{\otimes n}$. 
 The application of the $\mathcal{H}^{\otimes n}$ gives the state $\ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} \ket{x}$.
@@ -56,17 +86,41 @@ Now it's time to apply the Grover's operator. The Grover's operator (as defined 
 
 \begin{gather}
   U_\omega \ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} (-1)^{f(x)}\ket{x} = \frac{1}{\sqrt{N}}\biggl(\sum_{x=0}^{\omega - 1} \ket{x}  
-  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr) \equiv \frac{1}{\sqrt{N}}\ket{\phi}
+  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr) \coloneqq \frac{1}{\sqrt{N}}\ket{\phi} \coloneqq \overline{\ket{\phi}}
   \label{eq:grovers_application}
 \end{gather}
 
-Now it is time to apply the Grover's diffusion operator on the previously obtained state denoted as $\ket{\phi}$.
+%Before applying the diffusion operator, one apply the $\mathcal{H}$ as in \autoref{cirq:grovers_cirq}. 
+%We recall an important result \autoref{eq:hadamard_on_generic}. 
+%Therefore, one gets for $\mathcal{H}^{\otimes n}$ on $U_\omega \ket{s}$:
+%\begin{gather}
+%  \mathcal{H}\frac{1}{\sqrt{N}}\ket{\phi} = 
+%  \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n} \sum_{x=0}^{N-1}(-1)^{f(x)}\ket{x} = \\
+%  = \frac{1}{N}\sum_{x=0}^{N-1}(-1)^{f(x)} \sum_{y=0}^{N-1}(-1)^{x\cdot y}\ket{y}
+%\end{gather}
+%Which, in order to simplify the notation and to save space, we'll write as 
+%\begin{equation}
+%  \sum_{x=0}^{N-1}(-1)^{f(x)} \sum_{y=0}^{N-1}(-1)^{x\cdot y}\ket{y} \equiv 
+%  \sum_{x=0}(-1)^{f(x)} \sum_{y=0}(-1)^{x\cdot y}\ket{y} \equiv 
+%  \sum_{x,y}(-1)^{f(x)+x\codt y}\ket{y}
+%\end{equation}
+%Now, it is time to apply the Grover's diffusion operator, defined in 
+%\autoref{eq:grovers_diffusion}. So, knowing that the state 
+
+
+
+
+
+
+Now it is time to apply the Grover's diffusion operator on the previously obtained state denoted as $\overline{\ket{\phi}}$.
+
 The diffusion operator is defined in \autoref{eq:grovers_diffusion}. We recall that the state $\ket{s}$ is defined as 
 $\ket{s} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} \ket{x}$.
 The operator is therefore, 
+
 %\begin{equation}
 %  \begin{split}
-%    U_s \ket{\phi} = 2\ket{s}\bra{s} \ket{\phi} - \mathbbm{1}\ket{\phi} \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
+%    U_s \overline{\ket{\phi}} = 2\ket{s}\bra{s} \overline{\ket{\phi}} - \mathbbm{1}\overline{\ket{\phi}} \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
 %    2 \frac{1}{N}\Biggl[ \biggl( \sum_{x=0}^{N-1} (-1)^{f(x)}\ket{x}  \biggr)\cdot \biggl( \sum_{x=0}^{N-1} (-1)^{f(x)}\bra{x}  \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
 %    2 \frac{1}{N}\Biggl[ \biggl( \sum_{x=0}^{\omega - 1} \ket{x}  
 %  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr)\cdot \biggl( \sum_{x=0}^{\omega - 1} \bra{x}  
@@ -80,7 +134,8 @@ The operator is therefore,
 
 \begin{equation}
   \begin{split}
-    U_s \frac{1}{\sqrt{N}}\ket{\phi} = 2\ket{s}\bra{s} \ket{\phi} - \mathbbm{1}\ket{\phi} \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
+    U_s \overline{\ket{\phi}} = 2\ket{s}\bra{s} \overline{\ket{\phi}} - \mathbbm{1}\overline{\ket{\phi}} 
+    \frac{1}{\sqrt{N}}\biggl(2\ket{s}\bra{s} \ket{\phi} - \mathbbm{1}\ket{\phi}\biggr) \xrightarrow{\text{ \autoref{eq:grovers_application} }} \\
     \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2\biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x}  \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
     \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2\biggl( \sum_{x=0}^{N-1}\ket{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr) - \mathbbm{1} \Biggr] \ket{\phi} = \\
     \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2 \biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)\cdot \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\ket{\phi} - \ket{\phi }\Biggr]  
@@ -89,10 +144,77 @@ The operator is therefore,
 \end{equation}
 Let's try to break down the individual components.
 The term we want to break down is 
-\begin{gather}
-  \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\ket{\phi} = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1}(-1)^{f(x)}\ket{x} \biggr) = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{y=0}^{N-1}(-1)^{f(y)}\ket{y} \biggr)
-\end{gather}
+\begin{equation}
+\begin{split}
+  \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\ket{\phi} = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{x=0}^{N-1}(-1)^{f(x)}\ket{x} \biggr) = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl( \sum_{y=0}^{N-1}(-1)^{f(y)}\ket{y} \biggr) = \\ 
+ = \biggl( \sum_{x=0}^{N-1} \bra{x} \biggr)\cdot \biggl(\sum_{y=0}^{\omega - 1} \ket{y}  
+ + \sum_{y=\omega+1}^{N-1} \ket{y} \; \; - \ket{\omega} \biggr) \stackrel{\bra{x}\ket{y} = \delta_{x,y}}{=} (\omega + (N-\omega -1)+1) = N
+\end{split}
+\end{equation}
+The last equality is obtained using the orthogonality and the fact that we're summing from $0$ to $\omega -1$, giving $\omega$ and from $\omega+1$ to $N-1$ giving $N-\omega+1$ 
+and the last scalar product gives simply $-1$. Therefore, by plugging the result into \autoref{eq:grovers_apply_diffusion}.
+\begin{equation}
+  \begin{split}
+    \frac{1}{\sqrt{N}}\Biggl[\frac{1}{N}\cdot 2 \biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)\cdot N - \ket{\phi }\Biggr] = \frac{1}{\sqrt{N}}\Biggl[2\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr) - \ket{\phi }\Biggr] 
+  \end{split}
+\end{equation}
+Now, it is quite straightforward to simplify the equation, as we remember that $\ket{\phi}$ differs from $ \sum_{x=0}^{N-1}\ket{x}$ by the factor in front of $\ket{\omega}$. 
+We therefore obtain the resulting expression:
+\begin{equation}
+  \begin{split}
+    \frac{1}{\sqrt{N}}\Biggl[2\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr) - \ket{\phi }\Biggr] = \\ 
+    \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)+ \biggl( \sum_{x=0}^{N-1}\ket{x}\biggr) - \ket{\phi }\Biggr] =  
+    \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)+ 2\ket{\omega}\Biggr]
+  \end{split}
+\end{equation}
+Now, based on \autoref{cirq:grovers_cirq} left circuit, we're done applying gates and we can now try to measure and try to understand what we get at the output.
+We can easily rewrite the last equation as 
+\begin{equation}
+  \begin{split}
+    \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)+ 2\ket{\omega}\Biggr] = \\
+    \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{\omega-1}\ket{x} + \sum_{x=\omega + 1}^{N-1}\ket{x} +\ket{\omega} \biggr)+ 2\ket{\omega}\Biggr] = \\
+    \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{\omega-1}\ket{x} + \sum_{x=\omega + 1}^{N-1}\ket{x} \biggr)+ 3\ket{\omega}\Biggr] \coloneqq \ket{\eta}
+    \end{split}
+  \end{equation}
+  From that, we can obtain the probability of obtaining the state $\ket{\omega}$ by taking the inner product $|\bra{\eta}\ket{\omega}|^2$. 
+  We know that $\bra{x}\ket{\omega}$ will be zero if $\ket{x}\neq \ket{\omega}$. We see that the probability of observing the 
+  state $\ket{\omega}$ is greater than any other states. In fact, one can check (I am not covering it here) that by repeating this process more than once, the probability 
+  of observing the element $\ket{\omega}$ will be increase. There exists a theorem that states that the number of these kind iterations must be of order $\mathcal{O}(\sqrt{N})$, where 
+  $N$ is the number of entry qubits.
 
+
+
+
+%Now, we're ready to proceed further, which is nothing but a simultaneous application of $\mathcal{H}^{\otimes n}$ (as shown in \autoref{cirq:grovers_cirq}).
+%So the last operation can be represented by 
+%\begin{gather}
+%  \mathcal{H}^{\otimes n} \frac{1}{\sqrt{N}}\Biggl[\biggl( \sum_{x=0}^{N-1}\ket{x}\biggr)+ 2\ket{\omega}\Biggr] = \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}\biggl(\sum_{x=0}^{N-1}\ket{x}\biggr) + \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}2\ket{\omega}
+%  \label{eq:grovers_almost_last}
+%\end{gather}
+%We remember the fact that $\mathcal{H}(\mathcal{H}\ket{\psi}) = (\mathcal{H}\mathcal{H})\ket{\psi} = \mathbbm{1}\ket{\psi} = \ket{\psi}$.
+%We also remember that the first operation performed was to apply a $\mathcal{H}^{\otimes n}$ on $\ket{0}^{\otimes n}$. Which gave us 
+%$\mathcal{H}^{\otimes n}\ket{0}^{\otimes n} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1}\ket{x}$. Therefore in \autoref{eq:grovers_almost_last}, 
+%we obtain 
+%\begin{gather}
+%  \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}\biggl(\sum_{x=0}^{N-1}\ket{x}\biggr) + \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}2\ket{\omega} = 
+%  \ket{0}^{\otimes n} + \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}2\ket{\omega}
+%\end{gather}
+%Now, we're in the position of measuring the states. We can ask ourselves, what is the probability of measuring the state $\ket{omega}$.
+%We remember the result \label{eq:hadamard_on_generic}. Which will give us from the previous equality, 
+%\begin{gather}
+%  \ket{0}^{\otimes n} + \frac{1}{\sqrt{N}}\mathcal{H}^{\otimes n}2\ket{\omega} = \ket{0}^{\otimes n} + 2\frac{1}{N} \sum_{y=0}^{N-1}(-1)^{\omega \cdot y}\ket{y}
+%\end{gather}
+%Now we ask ourselves what is the probability of measuring $\ket{\omega}$. We suppose that $\ket{\omega} \neq \ket{0}$ (if this is not the case, it is even easier to compute the 
+%result).
+%So the probability of obtaining $\ket{\omega}$ from this state, will be given with the help of the scalar product:
+%\begin{gather}
+%  \bra{\omega} \ket{0} + 2\frac{1}{N}\sum_{y=0}^{N-1} (-1)^{\omega\cdot y}\bra{\omega}\ket{y}
+%\end{gather}
+%
+%
+%
+%
+%
 %\begin{gather}
 %  \bra{\omega}\ket{\phi} = \bra{\omega}\biggl(\sum_{x=0}^{\omega - 1} \ket{x}  
 %  + \sum_{x=\omega+1}^{N-1} \ket{x} \; \; - \ket{\omega} \biggr) \stackrel{\bra{a}\ket{b} = \delta_{a,b}}{=} 0 + 0 - \bra{\omega}\ket{\omega} = -1
