@@ -44,7 +44,7 @@ usual result
 Then we will apply our quantum function evaluation to the state on both registers:
 
 \begin{align}
-  \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes n} \xrightarrow{f(x)} \sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)\oplus x} =\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} 
+  \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes n} \xrightarrow{f(x)} \sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)\oplus 0} =\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} 
 \end{align}
 
 Which is nothing but the state after the function evaluation and before the second $\mathcal{H}^{\otimes n}$ on the first register. 
@@ -69,6 +69,12 @@ given by $|\bra{y}\ket{x}|$. Therefore, we have that the probability is given by
 \begin{gather}
   \Bigg< \frac{1}{2^n} \sum_{x=0}^{2^n-1} (-1)^{x\cdot y}\ket{f(x)} \Bigg| \frac{1}{2^n} \sum_{x'=0}^{2^n-1}(-1)^{x' \cdot y} \ket{f(x')} \Biggr> \\
   (\frac{1}{2^n})^2 \sum_{\substack{x=0,x'=0\\ x,x'}} (-1)^{x\cdot y} (-1)^{x' \cdot y} \bra{f(x)}\ket{f(x')}, \text{ using that } \bra{a}\ket{a'}=\delta_{a,a'} \\
+  (\frac{1}{2^n})^2 ((-1)^{0\cdot y} (-1)^{0\cdot y} \bra{f(0)}\ket{f(0)} + (-1)^{0\cdot y} (-1)^{1\cdot y} \bra{f(0)}\ket{f(1)} + ... + (-1)^{2^n-1\cdot y} (-1)^{2^n-2\cdot y} \bra{f(2^n-1)}\ket{f(2^n-2)} + (-1)^{2^n-1\cdot y} (-1)^{2^n-1\cdot y} \bra{f(2^n-1)}\ket{f(2^n-1))
+\end{gather}
+We know that if $\bra{f(x_i)}\ket{f(x_j)} == 1$ if $i == j$, therefore we know that $2^n$ of the terms will be zero. Therefore, we have that 
+$(2^n-1)(2^N-1) - 2^n$ terms will be zero. Therefore, we have that the probability of measuring $\ket{y}$ will be given by
+\begin{gather}
+  We know that if $\bra{f(x_i)}\ket{f(x_j)} == 0$ if $i == j$ \\
    \frac{1}{2^{2n}} \sum_{x=0}^{2^n-1}(-1)^{2x\cdot y}= \frac{1}{2^{2n}} (2^n)\cdot(1)=\frac{1}{2^n}
    \label{eq:simons_inner_product}
 \end{gather}
@@ -131,7 +137,7 @@ From these two cases, we can therefore deduce the following: the probability of 
 by $\frac{1}{2^n}$.
 And the probability for a certain $y$ if $s\neq 0^{\otimes n}$, we have 2 (sub)cases. That is, depending on whether this $y$ will either obey
 $y\cdot s=0$ or $y\cdot s\neq 0$. If it is the case of $y\cdot s=0$, we will have 0 probability of measuring this $\ket{y}$. If, on the other hand,
-$y\cdot \neq 0$, it will be given by $\frac{1}{2^{n-1}}$. 
+$y\cdot s\neq 0$, it will be given by $\frac{1}{2^{n-1}}$. 
 
 
 Therefore, we deduce that in both cases, for some measured y, we will have that \underline{$y\cdot s =0$} (as in the first case, $s=0$ by definition and in the second, 
