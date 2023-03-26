@@ -44,7 +44,7 @@ usual result
 Then we will apply our quantum function evaluation to the state on both registers:
 
 \begin{align}
-  \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes n} \xrightarrow{f(x)} \sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)\oplus x} =\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} 
+  \sum_{x=0}^{2^n-1} \ket{x} \ket{0}^{\otimes n} \xrightarrow{f(x)} \sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)\oplus 0} =\sum_{x=0}^{2^n-1} \ket{x}\ket{f(x)} 
 \end{align}
 
 Which is nothing but the state after the function evaluation and before the second $\mathcal{H}^{\otimes n}$ on the first register. 
@@ -131,7 +131,7 @@ From these two cases, we can therefore deduce the following: the probability of 
 by $\frac{1}{2^n}$.
 And the probability for a certain $y$ if $s\neq 0^{\otimes n}$, we have 2 (sub)cases. That is, depending on whether this $y$ will either obey
 $y\cdot s=0$ or $y\cdot s\neq 0$. If it is the case of $y\cdot s=0$, we will have 0 probability of measuring this $\ket{y}$. If, on the other hand,
-$y\cdot \neq 0$, it will be given by $\frac{1}{2^{n-1}}$. 
+$y\cdot s\neq 0$, it will be given by $\frac{1}{2^{n-1}}$. 
 
 
 Therefore, we deduce that in both cases, for some measured y, we will have that \underline{$y\cdot s =0$} (as in the first case, $s=0$ by definition and in the second, 
