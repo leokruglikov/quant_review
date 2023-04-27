@@ -83,3 +83,41 @@ Let's discuss main representation of the circuits.
   \hline
   \end{tabular}    
 \end{table}
+
+\subsection*{Inner product}
+\label{subsec:inner_product}
+One have seen the importance of the inner/dot product of two kets in quantum mechanics.
+Namely, how to evaluate a bra-ket of two states $\ket{a}$ and $\ket{b}$ - $|\bra{a}\ket{b}|^2$.
+For that, one prepares a state $\ket{a}\ket{b}$ together with a helper qubit $\ket{0}$.
+The resulting state will therefore be $\ket{0}\ket{a}\ket{b}$.
+
+One then applies the Hadamard gate to the first qubit $\ket{0}$, yielding the state $\nicefrac{1}{\sqrt{2}}(\ket{0}+\ket{1})\ket{a}\ket{b}$.
+One then applies a controlled-swap operator on the last 2 qubits $\ket{a}\ket{b}$. 
+The controlled swap operator is an operator that swaps 2 qubits if the controlled qubit is $\ket{1}$. 
+The result is therefore given by $\nicefrac{1}{\sqrt{2}}(\ket{0}\ket{a}\ket{b}+\ket{1}\ket{b}\ket{a})$. Finally, one applies 
+the Hadamard gate on the first qubit:
+\begin{equation}
+  \begin{split}
+  \mathcal{H}\otimes\mathbbm{1}\otimes \mathbbm{1}  \frac{1}{\sqrt{2}}\Biggl(\ket{0}\ket{a}\ket{b}+\ket{1}\ket{b}\ket{a}\Biggr) = 
+  \frac{1}{2}(\ket{0}+\ket{1})\ket{a}\ket{b} + \frac{1}{2}(\ket{0}-\ket{1})\ket{b}\ket{a} = \\
+  = \frac{1}{2}\Biggl( \ket{0}(\ket{a}\ket{b}+\ket{b}\ket{a}) + \ket{1}(\ket{a}\ket{b}-\ket{b}\ket{a})\Biggr) \equiv \ket{\psi}
+\end{split}
+\end{equation}
+Now, one can finally measure the obtained state. Thus one asks the question on the probability of measuring the 
+state $\ket{0}$. The probability is therefore is given by $|\bra{\bra{0}\otimes \mathbbm{1}\otimes \mathbbm{1}}\ket{\psi}|^2$.
+It is easy to verify that this probability is given by 
+\begin{equation}
+  p_{\ket{0}} = \frac{1}{2} - \frac{1}{2}|\bra{a}\ket{b}|^2
+\end{equation}
+This can be evaluated by multiple shots of the algorithm.
+
+
+
+
+
+
+
+
+
+
+

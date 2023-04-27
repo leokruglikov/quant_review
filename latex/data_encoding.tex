@@ -1,0 +1,80 @@
+\section{Data encoding}
+In order to use the quantum algorithms in question, 
+one should \textit{feed} the data to the quantum circuit. This is where the data encoding comes into place. 
+There are various ways to encode the data and let's consider some of them.
+
+\subsection*{Basis encoding}
+Basis encoding is the most straightforward way to 
+encode data. That is, suppose we want to treat an input composed of 4 elements. That is, 
+we can encode the 4 states by associating $1\mapsto \ket{0} = \ket{00}$, $2\mapsto \ket{1} = \ket{01}$, 
+$3\mapsto \ket{2} = \ket{01}$ and $4\mapsto \ket{3} = \ket{11}$. The input in the geral case of 2 qubits will therefore be 
+given by 
+\begin{equation}
+  \ket{\psi}_{\text{in}} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+\end{equation}
+
+We therefore set the corresponding coefficient $\alpha $ to one for the data we want to send to the quantum 
+circuit. For example, if one wants to feed the quantum circuit the number $2$, then the input state will look like 
+\begin{equation}
+  \ket{\psi}_{\text{in}} = 0\ket{00} + 1\ket{01} + 0\ket{10} + 0\ket{11} = \ket{01}
+\end{equation}
+
+On sees that this method is not fully optimal for complex datasets. For example, representing floating point numbers. 
+For one simple floating point number, using the convention of classical representation, one would need 32 bits, therefore 
+32 qubits for representing a floating point number.
+
+
+\subsection*{Amplitude encoding}
+The next method is the amplitude encoding. This method is quite straightforward. 
+Namely, suppose one wants to encode some kind of vector $\vec{x}$. The encoding is given by 
+\begin{equation}
+  \vec{x} = 
+  \begin{pmatrix}
+    x_1 \\
+    x_2 \\
+    \vdots \\
+    x_N
+  \end{pmatrix}
+  \xrightarrow{} \ket{\psi_{\vec{x}}} = \alpha \sum_{j = 0}^{n-1} x_j \ket{j} \qquad \text{ , with } \alpha \text{- a normalization constant}
+\end{equation}
+In a similar manner, one may represent a matrix/tensor. For example, a matrix $\vector{A}$ can be defined as 
+$\ket{\psi_{\vec{A}}} = \alpha \sum_i \sum_j a_{i,j}\ket{i}\ket{j}$, where $a_{i,j}$ represent the matrix elements $A_{i,j}$.
+For example, one may encode the vector $x = (1.0, 2.0, 0.4, 8.0)$. The corresponding encoding will then be 
+$\ket{\psi_{\vec{x}}} = 1.0\ket{00} + 2.0\ket{01} + 0.4\ket{10} + 8.0\ket{11}$.
+The normalization constant will be given by $\alpha = |\bra{\psi_{\vec{x}}}\ket{\psi_{\vec{x}}}|^\nicefrac{1}{2}$.
+
+\subsection*{Phase or time evolution encoding}
+Before considering the encoding, one remembers the notion of time-evolution in quantum 
+mechanics. Let $\ket{\psi_0}$ be the initial state. Using the Stone's theorem, one defines the time-evolution 
+operator, commonly denoted as $U(t)$. For a time-independent Hamiltonian, it is given by 
+$U(t)=e^{-it\widehat{H}}$, where $\widehat{H}$ is the Hamiltonian operator.
+
+Now, we move away from the time-evolution operator (this was a simple analogy). That is, the time $t$ is simply a real number, and the 
+operator $\widehat{H}$ can be any operator, for example, any of the Pauli operators.
+Now, one once again remembers the concept from quantum mechanics about the representation of the pauli operators $\widehat{\sigma}_{\{x,y,z\}}$. 
+The exponent of a Pauli operator is given by 
+\begin{equation}
+  e^{ia(\widehat{n}\cdot \vector{\widehat{\sigma}})} = \mathbb{1}\cos(a) + i(\widehat{n}\cdot \vector{\widehat{\sigma}})\sin(a)
+  \label{eq:general_pauli}
+\end{equation}
+
+Therefore, one can take the Pauli operator $\widehat{\sigma}$. One can therefore 
+encode any number $x$ using the the state $\ket{0}$. This state is used as $\widehat{\sigma}_y$ applied on 
+states $\ket{1}$ and $\ket{0}$ give a multiplication factor $i$. Namely, 
+$\widehat{\sigma}_y \ket{0} = i\ket{1}$. One can therefore get rid of the $i$ in \autoref{eq:general_pauli}.
+Thus, suppose one wants to encode the number $0.42$. Then, one defines the operator 
+\begin{equation}
+  e^{i\cdot 0.42\widehat{\sigma}_y}\ket{0} = \cos(0.42)\ket{0} -\sin(0.42)\ket{1}
+\end{equation}
+thus giving a state that have relative phase between $\ket{0}$ and $\ket{1}$.
+
+
+  
+
+
+
+
+
+
+
+

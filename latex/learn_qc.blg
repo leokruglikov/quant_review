@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2022/Arch Linux)
+This is BibTeX, Version 0.99d (TeX Live 2023/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: learn_qc.aux
 The style file: biblatex.bst
@@ -10,6 +10,7 @@ A level-1 auxiliary file: ./fourier.aux
 A level-1 auxiliary file: ./phase_estim.aux
 A level-1 auxiliary file: ./shor.aux
 A level-1 auxiliary file: ./grover.aux
+A level-1 auxiliary file: ./data_encoding.aux
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
@@ -32,7 +33,7 @@ Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 You've used 10 entries,
             6399 wiz_defined-function locations,
-            1273 strings with 18367 characters,
+            1274 strings with 18386 characters,
 and the built_in function-call counts, 51157 in all, are:
 = -- 1352
 > -- 5252
