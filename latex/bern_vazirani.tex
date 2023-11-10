@@ -31,15 +31,15 @@ Let's now show mathematically the Bernstein-Vazirani algorithm:
 \end{align}
 which is the state of the top-register before we reach the quantum function evaluation. Further we write:
 \begin{align}
-  \sum_x^{2^n} \ket{x}(\ket{0}-\ket{1}) &\xrightarrow{U_f} \sum_x^{2^n} (-1)^{f_s(x)}\ket{x} \\ 
-                                        &=\sum_x^{2^n} (-1)^{s\cdot x} \ket{x} 
+  \sum_x^{2^n-1} \ket{x}(\ket{0}-\ket{1}) &\xrightarrow{U_f} \sum_x^{2^n-1} (-1)^{f_s(x)}\ket{x} \\ 
+                                        &=\sum_x^{2^n-1} (-1)^{s\cdot x} \ket{x} 
 \end{align}
 Then, we need to apply the Hadamard gate to this state. We will then write the following:
 \begin{align}
-  \sum_x^{2^n} (-1)^{s\cdot x} \ket{x} \xrightarrow[\text{\autoref{eq:hadamard_on_generic}}]{\mathcal{H}^{\otimes n}} \sum_x^{2^n} (-1)^{x\cdot s} 
-  \sum_y^{2^n} (-1)^{x \cdot y} \ket{y} =\\
-\sum_x^{2^n} \sum_y^{2^n} (-1)^{x\cdot s} (-1)^{x \cdot y} \ket{y} =\\
-\sum_{x,y}^{2^n} (-1)^{(x\cdot s + x\cdot y)} \ket{y}
+  \sum_x^{2^n-1} (-1)^{s\cdot x} \ket{x} \xrightarrow[\text{\autoref{eq:hadamard_on_generic}}]{\mathcal{H}^{\otimes n}} \sum_x^{2^n-1} (-1)^{x\cdot s} 
+  \sum_y^{2^n-1} (-1)^{x \cdot y} \ket{y} =\\
+\sum_x^{2^n-1} \sum_y^{2^n-1} (-1)^{x\cdot s} (-1)^{x \cdot y} \ket{y} =\\
+\sum_{x,y}^{2^n-1} (-1)^{(x\cdot s + x\cdot y)} \ket{y}
 \end{align}
 We now claim that the last expression $\sum_{x,y} (-1)^{x\cdot s + x\cdot y}\ket{y} = \ket{s}$. It is not straightforward to see so we can try to prove it (as
 in \cite{noauthor_bernsteinvazirani_2022}).
@@ -53,4 +53,3 @@ happens to be the same as $s$, the probability of obtaining it will be maximum (
 Consequently the only non-zero term is associated to the state $\ket{y}=\ket{s}$.
 
 Thus, using this algorithm, we're able to find the state $\ket{y}=\ket{s}$ related to this "secret" string.
-

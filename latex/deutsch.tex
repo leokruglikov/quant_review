@@ -13,8 +13,8 @@ algorithm, to determine the properties of the function. In the case of the
 possible inputs, it will output a \verb|1| in the half of the input cases and \verb|0| in the other).
 \end{definition}
 We will consider the case where $n$ (the number of inputs) is equal to one. That is, the function $f(x)$ has one input bit. $f(x)$, with $x \in \{0,1\}$.
-Let's see an example of a constant or balanced functions. Let $f_1(x)$. The function happens to output the following: $f_1(0)=0$ and $f_1(1)=0$. We see that the 
-function has zeroes for any inputs. Therefore, we can conclude that the function $f_1$ is constant. Consider now the function $f_2$, satisfying the following:
+Let's see examples of functions that are either balanced or constant. Let $f_1(x)$. The function happens to output the following: $f_1(0)=0$ and $f_1(1)=0$. We see that the 
+function has zeroes for any input. Therefore, we can conclude that the function $f_1$ is constant. Consider now the function $f_2$, satisfying the following:
 $f_2(0)=1$ and $f_2(1)=0$. As there are 2 kinds of inputs (\verb|0| and \verb|1|), there are only 2 possible outputs (2 different outputs for 2 different inputs).
 We see that for the function $f_2$, half of the outputs (i.e. only one out of two) is \verb|0| and half of the inputs is \verb|1|. Therefore, the function $f_2$ is 
 balanced.
@@ -22,7 +22,7 @@ balanced.
 The example was a simple case, where the input was simply either \verb|0| or \verb|1|. The definition of this constant/balanced can be extended to a more complex case 
 of an input $\{0,1\}^n$, which is the Deutsch-Jozsa algorithm. 
 \subsection*{Deutsch's algorithm}
-Let's first consider the Deutsch's algorithm \cite{noauthor_deutschjozsa_2022}, that is, with one input bit. The circuit is \textit{postulated} to be.
+Let's first consider the Deutsch's algorithm \cite{noauthor_deutschjozsa_2022}, that is, with one input bit. Note that in this algorithm we assume or we are promised that the given function is either balanced or constant (it can be neither). The circuit is \textit{postulated} to be.
 In order for it to have a working mechanism, we need to prepare the initial states.
 
 
@@ -148,7 +148,7 @@ Lets start from the initial state, as shown in \autoref{table:cirq:deutsch_josza
 \begin{align}
   \ket{\psi_A}\stackrel{*}{=}& (\ket{0}\otimes \ket{0} ... \otimes \ket{0})\otimes (\ket{0}-\ket{1}) = \ket{0}^{\otimes n}\otimes (\ket{0}-\ket{1})\\
   \ket{\psi_B}\stackrel{*}{=}& \bigotimes_{i=0}^{n} \mathcal{H} \ket{\psi_A} \stackrel{*}{=} \mathcal{H}^{\otimes n}\ket{0}^{\otimes n}\otimes (\ket{0}-\ket{1})\\
-  \stackrel{*}{=}& \ket{+}^{\otimes n} (\ket{0}+\ket{1}) = \sum_{x}^{2^n} \ket{x}\otimes (\ket{0}-\ket{1})
+  \stackrel{*}{=}& \ket{+}^{\otimes n} (\ket{0}+\ket{1}) = \sum_{x}^{2^n-1} \ket{x}\otimes (\ket{0}-\ket{1})
 \end{align}
 Note that $\ket{x}$ here represents a binary string. Indeed, a $\mathcal{H}$ acting on $\ket{0}$ can represent the sum of numbers from 0 to 1. 
 ($\mathcal{H}\ket{x}\stackrel{*}{=}\ket{0}+\ket{1}$). When acting on a 2D space, 
