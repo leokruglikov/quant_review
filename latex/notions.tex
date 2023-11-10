@@ -45,6 +45,7 @@
 Let's discuss main representation of the circuits.
 
 \begin{table}[ht!]
+  \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
     Operator & \makecell{Bra-Ket \\ representation} & Matrix & \makecell{Other math \\ properties} & Qiskit \\
@@ -78,11 +79,53 @@ Let's discuss main representation of the circuits.
     0&0&0&1\\
     0&0&1&0
   \end{bmatrix}$ &
-  \makecell{Acting on a 4x1 vec.\\spanned by \\$\{\ket{00},\ket{01},\ket{10},\ket{11}\} } 
+  \makecell{Acting on a 4x1 vec.\\spanned by \\$\{\ket{00},\ket{01},\ket{10},\ket{11}\}$ } 
   & \\
   \hline
+\makecell{$X$ rotation \\ parametrized\\ by $\theta$ $R_x(\theta)$} & \makecell{$R_x = 
+e^{-i\nicefrac{\theta}{2}}\ket{+}\bra{+}$=\\ = $e^{i\nicefrac{\theta}{2}}\ket{-}\bra{-}$ \\
+$\cos(\frac{\theta}{2})\ket{0} + i\sin(\frac{\theta}{2})\ket{1}$} & 
+$\begin{bmatrix}
+  \cos(\frac{\theta}{2}) & -i\sin(\frac{\theta}{2}) \\
+  -i\sin(\frac{\theta}{2}) & \cos(\frac{\theta}{2})
+\end{bmatrix}$& & \\
+\hline
+\makecell{$Y$ rotation \\ parametrized\\ by $\theta$ $R_y(\theta)$}& \makecell{$R_y = 
+e^{-i\nicefrac{\theta}{2}}$}& & & \\
+\hline
   \end{tabular}    
+  \label{table:basic_notions}
 \end{table}
+
+One can separately write the matrices of the rotation operators:
+
+\begin{gather}
+    \widehat{R_x}(\theta) = e^{-i\frac{\theta}{2}\hat{\sigma}_x} = 
+    \begin{bmatrix}
+      \cos(\nicefrac{\theta}{2}) & -i\sin(\nicefrac{\theta}{2}) \\
+      -i\sin(\nicefrac{\theta}{2}) & \cos(\nicefrac{\theta}{2}) \\
+    \end{bmatrix} \\
+    \widehat{R_y}(\theta) = e^{-i\frac{\theta}{2}\hat{\sigma}_y} = 
+    \begin{bmatrix}
+      \cos(\nicefrac{\theta}{2}) & -\sin(\nicefrac{\theta}{2}) \\
+      -\sin(\nicefrac{\theta}{2}) & \cos(\nicefrac{\theta}{2}) 
+    \end{bmatrix}
+    \\
+    \widehat{R_z}(\theta) = e^{-i\frac{\theta}{2}\hat{\sigma}_z} = 
+    \begin{bmatrix}
+      e^{-i\frac{\theta}{2}} & 0 \\
+      0 & e^{i\frac{\theta}{2}}
+    \end{bmatrix}
+    \\
+    \widehat{R}(\theta_1, \theta_2, \theta_3) \equiv \widehat{R}_z(\theta_1)\widehat{R}_y(\theta_2)\widehat{R}_z(\theta_3) = 
+    \begin{bmatrix}
+    e^{i(-\frac{\theta_1}{2}-\frac{\theta_3}{2})}\cos(\frac{\theta_2}{2}) &
+    -e^{-i(-\frac{\theta_1}{2} + \frac{\theta_3}{2})}\sin(\frac{\theta_2}{2}) \\
+    e^{i(\frac{\theta_1}{2}-\frac{\theta_3}{2})}\sin(\frac{\theta_2}{2}) & 
+    e^{i(\frac{\theta_1}{2}+\frac{\theta_3}{2})}\cos(\frac{\theta_2}{2})
+    \end{bmatrix}
+\end{gather}
+
 
 \subsection*{Inner product}
 \label{subsec:inner_product}

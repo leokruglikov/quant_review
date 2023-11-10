@@ -11,6 +11,7 @@ A level-1 auxiliary file: ./phase_estim.aux
 A level-1 auxiliary file: ./shor.aux
 A level-1 auxiliary file: ./grover.aux
 A level-1 auxiliary file: ./data_encoding.aux
+A level-1 auxiliary file: ./variational.aux
 Reallocated glb_str_ptr (elt_size=8) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=8) to 20 items from 10.
@@ -27,48 +28,51 @@ Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: learn_qc-blx.bib
-Database file #2: ./q.bib
+Database file #2: ./qiskit.bib
+Warning--I didn't find a database entry for "noauthor_quantum_phase_estim"
+Warning--I didn't find a database entry for "noauthor_quantum_phase_estim_wiki"
 Biblatex version: 3.18
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 10 entries,
+You've used 9 entries,
             6399 wiz_defined-function locations,
-            1274 strings with 18386 characters,
-and the built_in function-call counts, 51157 in all, are:
-= -- 1352
-> -- 5252
-< -- 431
-+ -- 4743
-- -- 4555
-* -- 2050
-:= -- 6586
+            1272 strings with 14564 characters,
+and the built_in function-call counts, 51153 in all, are:
+= -- 1751
+> -- 4798
+< -- 404
++ -- 4439
+- -- 4104
+* -- 2211
+:= -- 6640
 add.period$ -- 0
-call.type$ -- 10
-change.case$ -- 45
-chr.to.int$ -- 498
-cite$ -- 18
-duplicate$ -- 3902
-empty$ -- 4045
-format.name$ -- 47
-if$ -- 7071
+call.type$ -- 9
+change.case$ -- 66
+chr.to.int$ -- 426
+cite$ -- 16
+duplicate$ -- 3984
+empty$ -- 3935
+format.name$ -- 116
+if$ -- 7426
 int.to.chr$ -- 0
-int.to.str$ -- 10
+int.to.str$ -- 12
 missing$ -- 0
-newline$ -- 249
-num.names$ -- 41
-pop$ -- 2855
+newline$ -- 231
+num.names$ -- 107
+pop$ -- 2591
 preamble$ -- 1
-purify$ -- 39
+purify$ -- 67
 quote$ -- 0
-skip$ -- 1184
+skip$ -- 1233
 stack$ -- 0
-substring$ -- 3255
-swap$ -- 1501
-text.length$ -- 347
-text.prefix$ -- 9
+substring$ -- 3840
+swap$ -- 1376
+text.length$ -- 322
+text.prefix$ -- 8
 top$ -- 1
-type$ -- 328
+type$ -- 294
 warning$ -- 0
-while$ -- 492
+while$ -- 522
 width$ -- 0
-write$ -- 240
+write$ -- 223
+(There were 2 warnings)

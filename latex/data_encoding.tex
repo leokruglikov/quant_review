@@ -2,6 +2,38 @@
 In order to use the quantum algorithms in question, 
 one should \textit{feed} the data to the quantum circuit. This is where the data encoding comes into place. 
 There are various ways to encode the data and let's consider some of them.
+Before discussing these methods straigh away, we can make a small intermezzo on the overall concept 
+(based on \cite{schuld_machine_2018}). 
+
+So, as said, data encoding is an essential step before it to get processed by a quantum computer. 
+Encoding classical data into a quantum computer is nothing but mapping this classical data from 
+the feature space to the high-dimensional quantum space. This can be thought 
+as an analogy to the usual kernel methods in classical machine learning, where data is mapped to a 
+feature space of a higher dimension. The map in its general case, is defined to be 
+$x \mapsto \ket{\phi(x)}$\footnote{ Or in a density operator notiation $x \mapsto \widehat{\rho}(x)$}
+I now let myself quote a nice fragment from \cite{schuld_machine_2018}, that perfectly depicts the 
+importance of the notion of encoding.
+\begin{framed}
+  \begin{quote}
+    \textsl{
+  Interpreting the data-encoding strategy as a feature map reveals that it is more than
+  just a necessary preparation step in a quantum machine learning algorithm; it can in
+  fact be the most fundamental part of its design. The reason is that the feature map
+  changes the structure of the data in a non-trivial manner. With exception from perhaps
+amplitude encoding, the above listed encoding strategies for single data inputs are all 
+nonlinear operations in the data. For example, rotation encoding prepares a quantum
+state that is a combination of trigonometric functions like $\sin(x_i)$, $\cos(x_i)$ in the
+original features $x_i$. Nonlinear transformations, however, can change the distances
+between data points, and therefore change the intrinsic hardness of a machine learning
+problem for better or for worse. Imagine a perfectly linearly separable dataset that
+gets “shuffled up” by the data-encoding feature map, so that the quantum states
+representing each data point are not any more linearly separable. Vice versa, the
+feature map may separate classes of data, which essentially solves the machine
+learning problem.}
+  \end{quote}
+\end{framed}
+
+
 
 \subsection*{Basis encoding}
 Basis encoding is the most straightforward way to 
@@ -54,7 +86,7 @@ operator $\widehat{H}$ can be any operator, for example, any of the Pauli operat
 Now, one once again remembers the concept from quantum mechanics about the representation of the pauli operators $\widehat{\sigma}_{\{x,y,z\}}$. 
 The exponent of a Pauli operator is given by 
 \begin{equation}
-  e^{ia(\widehat{n}\cdot \vector{\widehat{\sigma}})} = \mathbb{1}\cos(a) + i(\widehat{n}\cdot \vector{\widehat{\sigma}})\sin(a)
+  e^{ia(\widehat{n}\cdot \vector{\widehat{\sigma}})} = \mathbbm{1}\cos(a) + i(\widehat{n}\cdot \vector{\widehat{\sigma}})\sin(a)
   \label{eq:general_pauli}
 \end{equation}
 
@@ -67,6 +99,35 @@ Thus, suppose one wants to encode the number $0.42$. Then, one defines the opera
   e^{i\cdot 0.42\widehat{\sigma}_y}\ket{0} = \cos(0.42)\ket{0} -\sin(0.42)\ket{1}
 \end{equation}
 thus giving a state that have relative phase between $\ket{0}$ and $\ket{1}$.
+
+\subsection*{Hamiltonian encoding}
+The Hamiltonian encoding is an another way of encoding. This is more of an exotical way of encoding data, 
+and may seem very unusual. For that, consider a matrix $\vec{A}$ (which can be a column vector or a matrix of any size).
+From that, we construct the Hamiltonian $H$.
+\begin{equation}
+  H = 
+  \begin{bmatrix}
+    0 & \vec{A} \\
+    \vec{A}^{\dagger} & 0 
+  \end{bmatrix}
+\end{equation}
+This Hamiltonian is clearly Hermitian and thus diagonalizable, with spectrum $\{\lambda_i\}$ and eigenbasis 
+$\{\vec{v}\} \equiv \{\ket{v}\}$. One considers the time-evolution 
+operator based on the Hamiltonian in question given by $\exp(-itH)$. Consider now a vector 
+$\vec{\alpha} \equiv \ket{\alpha}$. This vector can be decomposed in the basis $\{\vec{v}\}$:
+\begin{equation}
+  \ket{\alpha} = \sum_i \gamma_i \ket{v_i}\qquad \text{ , with } \gamma_i \coloneq \bra{\alpha}\ket{v_i}
+\end{equation}
+The result of applying the Hamiltonian to the vector $\ket{\alpha}$ is therefore given by 
+\begin{equation}
+  e^{-itH}\ket{\alpha} = e^{itH}\sum_i \gamma_i \ket{v_i} = \sum_i e^{it\lambda_i}\gamma_i \ket{v_i}
+\end{equation}
+
+The obtained quantum state will be therefore given by 
+\begin{equation}
+  \ket{\psi} = \sum_i \bra{\alpha}\ket{\phi_i}\ket{\phi_i} \text{ , with } \ket{\phi} \text{ - canonical basis } 
+  \equiv \{\ket{00...0}, \ket{00...1}, ..., \ket{11...1} \}
+\end{equation}
 
 
   

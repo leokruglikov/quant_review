@@ -2,8 +2,15 @@
 \contentsline {section}{\numberline {1}Concepts and notions}{3}{section.1}%
 \contentsline {paragraph}{}{3}{section*.3}%
 \contentsline {section}{\numberline {2}Deutsch-Jozsa algorithm}{5}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Fourier transform}{16}{subsection.2.1}%
-\contentsline {paragraph}{}{17}{section*.17}%
+\contentsline {subsection}{\numberline {2.1}Bernstein-Vazirani algorithm}{10}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Simons algorithm}{12}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Fourier transform}{16}{subsection.2.3}%
+\contentsline {paragraph}{}{17}{section*.15}%
+\contentsline {subsection}{\numberline {2.4}Phase estimation}{21}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Shor's algorithm}{24}{section.3}%
 \contentsline {section}{\numberline {4}Grover's algorithm}{27}{section.4}%
 \contentsline {section}{\numberline {5}Data encoding}{30}{section.5}%
+\contentsline {section}{\numberline {6}Variational Quantum Algorithms}{33}{section.6}%
+\contentsline {paragraph}{}{33}{section*.26}%
+\contentsline {paragraph}{}{34}{section*.28}%
+\contentsline {paragraph}{First approach}{35}{section*.29}%

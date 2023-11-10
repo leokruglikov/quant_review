@@ -36,11 +36,13 @@
 \usepackage{makecell}
 \usepackage{booktabs}
 \usepackage{amsfonts}
-\addbibresource{./q.bib}
+\addbibresource{./qiskit.bib}
 \numberwithin{equation}{section}
-\usepackage{amsmath}
+\ One defines usepackage{amsmath}
 \usepackage{amssymb}
-
+\newtheorem{prettytheorem}{Theorem}[section]
+\usepackage{framed}
+\usepackage{minted}
 
 
 \begin{document}
@@ -99,6 +101,7 @@ Leo Kruglikov
 \include{./shor.tex}
 \include{./grover.tex}
 \include{./data_encoding.tex}
+\include{./variational.tex}
 
 
 \newpage

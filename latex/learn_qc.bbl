@@ -28,8 +28,8 @@
     \field{note}{Page Version {ID}: 1121289156}
     \field{title}{Bernstein–Vazirani algorithm}
     \verb{url}
-    \verb https://en.wikipedia.org/w/index.php?title=Bernstein%E2%80%93Vazirani
-    \verb _algorithm&oldid=1121289156
+    \verb https://en.wikipedia.org/w/index.php?title=Bernstein\%E2\%80\%93Vazir
+    \verb ani_algorithm\&oldid=1121289156
     \endverb
     \field{langid}{english}
     \verb{file}
@@ -55,8 +55,8 @@
     \field{note}{Page Version {ID}: 1122661600}
     \field{title}{Deutsch–Jozsa algorithm}
     \verb{url}
-    \verb https://en.wikipedia.org/w/index.php?title=Deutsch%E2%80%93Jozsa_algo
-    \verb rithm&oldid=1122661600
+    \verb https://en.wikipedia.org/w/index.php?title=Deutsch\%E2\%80\%93Jozsa_a
+    \verb lgorithm\&oldid=1122661600
     \endverb
     \field{langid}{english}
     \verb{file}
@@ -127,16 +127,12 @@
     \field{labeltitlesource}{title}
     \field{sortinit}{Q}
     \field{sortinithash}{Q}
-    \field{abstract}{%
-    In quantum computing, the quantum Fourier transform ({QFT}) is a linear transformation on quantum bits, and is the quantum analogue of the discrete Fourier transform. The quantum Fourier transform is a part of many quantum algorithms, notably Shor's algorithm for factoring and computing the discrete logarithm, the quantum phase estimation algorithm for estimating the eigenvalues of a unitary operator, and algorithms for the hidden subgroup problem. The quantum Fourier transform was discovered by Don Coppersmith.The quantum Fourier transform can be performed efficiently on a quantum computer with a decomposition into the product of simpler unitary matrices. The discrete Fourier transform on 2 n \{{\textbackslash}displaystyle 2{\textasciicircum}\{n\}\} amplitudes can be implemented as a quantum circuit consisting of only O ( n 2 ) \{{\textbackslash}displaystyle O(n{\textasciicircum}\{2\})\} Hadamard gates and controlled phase shift gates, where n \{{\textbackslash}displaystyle n\} is the number of qubits. This can be compared with the classical discrete Fourier transform, which takes O ( n 2 n ) \{{\textbackslash}displaystyle O(n2{\textasciicircum}\{n\})\} gates (where n \{{\textbackslash}displaystyle n\} is the number of bits), which is exponentially more than O ( n 2 ) \{{\textbackslash}displaystyle O(n{\textasciicircum}\{2\})\} . The quantum Fourier transform acts on a quantum state vector (a quantum register), and the classical Fourier transform acts on a vector. Both types of vectors can be written as lists of complex numbers. In the quantum case it is a sequence of probability amplitudes for all the possible outcomes upon measurement (called basis states, or eigenstates). Because measurement collapses the quantum state to a single basis state, not every task that uses the classical Fourier transform can take advantage of the quantum Fourier transform's exponential speedup. The best quantum Fourier transform algorithms known (as of late 2000) require only O (
-  n log ⁡ n ) \{{\textbackslash}displaystyle O(n{\textbackslash}log n)\} gates to achieve an efficient approximation.%
-    }
     \field{booktitle}{Wikipedia}
     \field{note}{Page Version {ID}: 1123746557}
     \field{title}{Quantum Fourier transform}
     \verb{url}
-    \verb https://en.wikipedia.org/w/index.php?title=Quantum_Fourier_transform&
-    \verb oldid=1123746557
+    \verb https://en.wikipedia.org/w/index.php?title=Quantum_Fourier_transform\
+    \verb &oldid=1123746557
     \endverb
     \field{langid}{english}
     \verb{file}
@@ -151,53 +147,38 @@
     \field{urlyear}{2023}
   \endentry
 
-  \entry{noauthor_quantum_phase_estim}{online}{}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{Q}
-    \field{sortinithash}{Q}
-    \field{abstract}{%
-    A university quantum algorithms/computation course supplement based on Qiskit%
+  \entry{schuld_machine_2018}{book}{}
+    \name{author}{2}{}{%
+      {{hash=SM}{%
+         family={Schuld},
+         familyi={S\bibinitperiod},
+         given={Maria},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=PF}{%
+         family={Petruccione},
+         familyi={P\bibinitperiod},
+         given={Francesco},
+         giveni={F\bibinitperiod},
+      }}%
     }
-    \field{title}{Quantum Phase Estimation}
-    \verb{url}
-    \verb https://community.qiskit.org/textbook/ch-algorithms/quantum-phase-est
-    \verb imation.html
-    \endverb
-    \field{langid}{english}
-    \verb{file}
-    \verb Snapshot:/home/leo/Zotero/storage/K938HG2F/quantum-phase-estimation.h
-    \verb tml:text/html
-    \endverb
-    \field{urlday}{27}
-    \field{urlmonth}{02}
-    \field{urlyear}{2023}
-  \endentry
-
-  \entry{noauthor_quantum_phase_estim_wiki}{inreference}{}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{Q}
-    \field{sortinithash}{Q}
-    \field{abstract}{%
-    In quantum computing, the quantum phase estimation algorithm (also referred to as quantum eigenvalue estimation algorithm), is a quantum algorithm to estimate the phase (or eigenvalue) of an eigenvector of a unitary operator. More precisely, given a unitary matrix U \{{\textbackslash}displaystyle U\} and a quantum state {\textbar} ψ ⟩ \{{\textbackslash}displaystyle {\textbar}{\textbackslash}psi {\textbackslash}rangle \} such that U {\textbar} ψ ⟩ = e 2 π i θ {\textbar} ψ ⟩ \{{\textbackslash}displaystyle U{\textbar}{\textbackslash}psi {\textbackslash}rangle =e{\textasciicircum}\{2{\textbackslash}pi i{\textbackslash}theta \}{\textbar}{\textbackslash}psi {\textbackslash}rangle \} , the algorithm estimates the value of θ \{{\textbackslash}displaystyle {\textbackslash}theta \} with high probability within additive error ε \{{\textbackslash}displaystyle {\textbackslash}varepsilon \} , using O ( log ⁡ ( 1 / ε ) ) \{{\textbackslash}displaystyle O({\textbackslash}log(1/{\textbackslash}varepsilon ))\} qubits (without counting the ones used to encode the eigenvector state) and O ( 1 / ε ) \{{\textbackslash}displaystyle O(1/{\textbackslash}varepsilon )\} controlled-U operations. The algorithm was initially introduced by Alexei Kitaev in 1995.: 246 Phase estimation is frequently used as a subroutine in other quantum algorithms, such as Shor's algorithm: 131  and the quantum algorithm for linear systems of equations.%
+    \list{publisher}{1}{%
+      {Springer}%
     }
-    \field{booktitle}{Wikipedia}
-    \field{note}{Page Version {ID}: 1133698428}
-    \field{title}{Quantum phase estimation algorithm}
-    \verb{url}
-    \verb https://en.wikipedia.org/w/index.php?title=Quantum_phase_estimation_a
-    \verb lgorithm&oldid=1133698428
-    \endverb
-    \field{langid}{english}
-    \verb{file}
-    \verb Snapshot:/home/leo/Zotero/storage/IFQRU5VN/Quantum_phase_estimation_a
-    \verb lgorithm.html:text/html
-    \endverb
-    \field{day}{15}
-    \field{month}{01}
-    \field{year}{2023}
-    \field{urlday}{06}
-    \field{urlmonth}{03}
-    \field{urlyear}{2023}
+    \strng{namehash}{SMPF1}
+    \strng{fullhash}{SMPF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{edition}{2}
+    \field{isbn}{978-3-030-83097-7}
+    \field{series}{Quantum Science and Technology}
+    \field{title}{Machine Learning with Quantum Computers}
+    \list{location}{1}{%
+      {Switzerland}%
+    }
+    \field{year}{2018}
   \endentry
 
   \entry{noauthor_shors_nodate}{online}{}
